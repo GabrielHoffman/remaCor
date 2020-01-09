@@ -1,0 +1,37 @@
+citEntry(entry="article",
+   title = "Increasing the power of meta-analysis of genome-wide association studies to detect heterogeneous effects",
+   author = personList( as.person("CH Lee"), as.person("Eleazar Eskin"), as.person("Buhm Han")),
+   year = 2017,
+   journal = "Bioinformatics",
+   doi = "10.1093/bioinformatics/btx242",
+   volume = "33",
+   issue = "14",
+   pages = "i379--i388",
+   textVersion =
+   paste("Lee, C. H., Eskin, E., & Han, B. (2017). Increasing the power of meta-analysis of genome-wide association studies to detect heterogeneous effects. Bioinformatics, 33(14), i379-i388. doi:10.1093/bioinformatics/btx242"))
+
+citEntry(entry="article",
+   title = "A general framework for meta-analyzing dependent studies with overlapping subjects in association mapping",
+   author = personList( as.person("Buhm Han"), as.person("et al.")),
+   year = 2016,
+   journal = "Hum. Mol. Genet.",
+   doi = "10.1093/hmg/ddw049",
+   volume = "25",
+   issue = "9",
+   pages = "1857-1866",
+   textVersion =
+   paste("Han, B. et al. (2016) A general framework for meta-analyzing dependent studies with overlapping subjects in association mapping. Hum. Mol. Genet., 25, 1857-1866."))
+
+citEntry(entry="article",
+   title = "Random-effects model aimed at discovering associations in meta-analysis of genome-wide association studies",
+   author = personList( as.person("Buhm Han"), as.person("Eleazar Eskin")),
+   year = 2011,
+   journal = "Am. J. Hum. Genet.",
+   doi = "10.1016/j.ajhg.2011.04.014",
+   volume = "88",
+   issue = "5",
+   pages = "586--598",
+   textVersion =
+   paste("Han, B. and Eskin, E. (2011) Random-effects model aimed at discovering associations in meta-analysis of genome-wide association studies. Am. J. Hum. Genet., 88, 586-598. doi:10.1016/j.ajhg.2011.04.014"))
+
+   

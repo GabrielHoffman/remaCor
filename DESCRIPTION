@@ -1,0 +1,35 @@
+Package: rema
+Type: Package
+Title: Random effects meta-analysis (rema) for correlated test statistics
+Version: 0.0.2
+Date: 2020-01-08
+Author: Gabriel E. Hoffman
+Maintainer: Gabriel E. Hoffman <gabriel.hoffman@mssm.edu>
+Description: Compute random effects meta-analysis for correlated test statistics
+VignetteBuilder: knitr
+License: GPL (>= 3)
+Suggests:
+    knitr,
+    BiocGenerics
+biocViews: 
+    RNASeq,
+    GeneExpression,
+    DifferentialExpression,
+    Regression,
+    FunctionalGenomics,
+    Transcriptomics,
+    GenomeWideAssociation,
+    Software
+Depends:
+    R (>= 3.6.0),
+    RUnit,
+    clusterGeneration,
+    metafor,
+    methods
+Imports:
+    mvtnorm,
+    compiler,
+    Rdpack,
+    stats
+RdMacros: Rdpack 
+RoxygenNote: 7.0.2
