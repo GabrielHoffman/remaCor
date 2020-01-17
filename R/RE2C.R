@@ -229,8 +229,6 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
       p.RE2C.twoStep = 1
       # GEH need to compute this value anyway, right?
 
-      p.RE2C.twoStep <- ((1-tau2.zero.prob[n-1])*stat2_cdf[floor(20*(apply(cbind(FEt.lows,(rep(stat,1000)-pkg.env$FEs)),1,max)))+1])%*%pkg.env$FEprobs + (1-tau2.zero.prob[n-1])*stat2_cdf[floor(20*FEt.lows[1000]+1)]*pchisq(50, 1, lower.tail=FALSE)
-      
     }else if(stat>50){
       p.RE2C.twoStep <- RE2C_ext(stat,stat2_cdf=stat2_cdf,tmax=FEt.lows[1000],n)
         
