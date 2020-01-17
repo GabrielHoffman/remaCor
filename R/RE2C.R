@@ -100,7 +100,7 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
 
     # Load data from file
     # Originally stored in RE2C.RData
-    path <- system.file("extdata", package = "RE2C")
+    path <- system.file("extdata", package = "rema")
 
     pkg.env$RE2Cor.list <- readRDS(paste(path, 'RE2Cor.list.RDS', sep='/'))
     pkg.env$FEtlow_table <- readRDS(paste(path, 'FEtlow_table.RDS', sep='/'))
