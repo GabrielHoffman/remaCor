@@ -2,7 +2,12 @@
 
 export(LS)
 export(RE2C)
+export(metanova)
+exportClasses(metanova)
+exportMethods(print)
+exportMethods(show)
 import(RUnit)
+import(Rdpack)
 import(clusterGeneration)
 import(methods)
 import(stats)

@@ -5,7 +5,7 @@ Version: 0.0.2
 Date: 2020-01-08
 Author: Gabriel E. Hoffman
 Maintainer: Gabriel E. Hoffman <gabriel.hoffman@mssm.edu>
-Description: Compute random effects meta-analysis for correlated test statistics
+Description: Compute random effects meta-analysis for correlated test statistics.
 VignetteBuilder: knitr
 License: GPL (>= 3)
 Suggests:
