@@ -8,7 +8,7 @@ library(devtools)
 install_github("GabrielHoffman/remaCor")
 ```
 
-See [vignette](https://htmlpreview.github.io/?https://raw.githubusercontent.com/GabrielHoffman/remaCor/master/vignettes/remaCor.html?token=ADFAXTOJD7MWQQI6EPGYOCC6KVROE)
+See [vignette](https://htmlpreview.github.io/?https://raw.githubusercontent.com/GabrielHoffman/remaCor/master/vignettes/remaCor.html?token=ADFAXTOZWJURVURLNBUPJ6C6KWCYG)
 
 This is a developmental version.
 
