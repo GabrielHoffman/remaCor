@@ -1,4 +1,4 @@
-Package: rema
+Package: remaCor
 Type: Package
 Title: Random effects meta-analysis (rema) for correlated test statistics
 Version: 0.0.2
