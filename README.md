@@ -8,7 +8,7 @@ Standard approaches to meta-analysis assumes that effect sizes are statistically
 
 ## Install from GitHub
 
-```
+```r
 library(devtools)
 
 install_github("GabrielHoffman/remaCor")
@@ -16,7 +16,7 @@ install_github("GabrielHoffman/remaCor")
 
 ## Usage
 Basic usage:
-```{r }
+```r
 # Run random effects meta-analysis, accounting for correlation 
 RE2C( beta, stders, Sigma)
 ```
