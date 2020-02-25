@@ -12,7 +12,8 @@ library(devtools)
 install_github("GabrielHoffman/remaCor")
 ```
 
-See [Vignette](https://hoffmg01.u.hpc.mssm.edu/software/remaCor/remaCor.html)
+## Usage
+[See Vignette](https://hoffmg01.u.hpc.mssm.edu/software/remaCor/remaCor.html)
 
 This is a developmental version.
 
