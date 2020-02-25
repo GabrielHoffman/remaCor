@@ -30,6 +30,7 @@ cd /Users/gabrielhoffman/workspace/repos
 R
 library('knitr')
 rmarkdown::render('remaCor/vignettes/remaCor.Rmd')
+# scp remaCor/vignettes/remaCor.html sklar1:/sc/orga/work/hoffmg01/software/remaCor
 --->
 
 ```{r setup, echo=FALSE, results="hide"}
