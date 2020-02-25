@@ -1,0 +1,123 @@
+---
+title: "remaCor: Random effects meta-analysis for correlated test statistics"
+author:
+- name: "[Gabriel Hoffman](http://gabrielhoffman.github.io)"
+  affiliation: | 
+    Icahn School of Medicine at Mount Sinai, New York
+abstract: > 
+  Standard approaches to meta-analysis assumes that effect sizes are statistically independent.  Here we provide methods for fixed and random effects meta-analysis when the correlation between effect sizes are known.
+
+
+  remaCor v`r packageVersion("remaCor")`<br> 
+  `r format(Sys.time(),'%B %d, %Y %H:%M:%S')`<br>  
+
+output:
+  rmarkdown::html_document:
+    highlight: pygments
+    toc: false
+    toc_depth: 3
+    fig_width: 5
+bibliography: REFERENCES.bib
+vignette: >
+  %\VignetteIndexEntry{Random effects meta-analysis (remaCor) for correlated test statistics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\usepackage[utf8]{inputenc}
+---
+
+<!---
+cd /Users/gabrielhoffman/workspace/repos
+R
+library('knitr')
+rmarkdown::render('remaCor/vignettes/remaCor.Rmd')
+--->
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(tidy=FALSE, cache=TRUE,
+                      dev="png",
+                      package.startup.message = FALSE,
+                      message=FALSE, error=FALSE, warning=TRUE)
+options(width=100)
+```	
+
+
+### Description
+#### Fixed effects meta-analysis
+
+`LS()` implements fixed effect meta-analysis for correlated test statistics using method of @lin2009meta.  By default, correlation is set to identity matrix to for independent test statistics.  
+
+#### Random effects  meta-analysis
+
+`RE2C()` implements random effect meta-analysis for correlated test statistics that jointly tests deviation of the mean from zero as well as effect size heterogenity.  This method uses the RE2 method of @han2011random, or RE2 for correlated test statistics from @han2016general.   By default, correlation is set to identity matrix to for independent test statistics.  (In addition, this function computes the two step RE2C method of @lee2017increasing to further test for heterogenity in effect size after applying a fixed effect test.)
+
+
+  * stat1: statistic testing effect mean
+
+  * stat2: statistic testing effect heterogeneity
+
+  * RE2Cp: RE2 p-value accounting for correlelation between tests. (This is the p-value appropriate for most questions)
+
+  * RE2Cp.twoStep: two step RE2C test after fixed effect test.
+            Only evaluated if twoStep==TRUE.  (not typically used)
+
+  * QE: test statistic for the test of (residual) heterogeneity
+
+  * QEp: p-value for the test of (residual) heterogeneity
+
+  * Isq: I^2 statistic
+
+    QE, QEp and ISq are only evaluted if correlation is diagonal
+
+
+
+### Examples
+```{r rema, results='hide'}
+library(remaCor)
+library(metafor)
+
+# Generate effects
+library(mvtnorm)
+library(clusterGeneration )
+
+n = 4
+Sigma = cov2cor(genPositiveDefMat(n)$Sigma)
+beta = t(rmvnorm(1, rep(0, n), Sigma))
+stders = rep(.1, n)
+
+# Standard fixed effects meta-analysis
+# of independent effects with metafor pacakge
+rma( beta, stders, method="FE")
+
+# Standard random effects meta-analysis
+# of independent effects with metafor pacakge
+rma( beta, stders, method="REML")
+
+# Run fixed effects meta-analysis, assume identity correlation  
+# Use Lin-Sullivan method
+LS( beta, stders)
+
+# Run fixed effects meta-analysis, accounting for correlation  
+# Use Lin-Sullivan method
+LS( beta, stders, Sigma)
+
+# Run random effects meta-analysis, assume identity correlation  
+RE2C( beta, stders)
+
+# Run random effects meta-analysis, accounting for correlation 
+RE2C( beta, stders, Sigma)
+```
+
+```{r out, echo=FALSE}
+RE2C( beta, stders, Sigma)
+```
+
+
+
+
+
+# Session info
+```{r sessionInfo}
+sessionInfo()
+```
+
+## References
