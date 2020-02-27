@@ -64,10 +64,10 @@ RE2C( beta, stders, Sigma)
 }
 \references{
 {
-  \insertRef{lee2017increasing}{rema}
+  \insertRef{lee2017increasing}{remaCor}
 
-  \insertRef{han2016general}{rema}
+  \insertRef{han2016general}{remaCor}
 
-  \insertRef{han2011random}{rema}
+  \insertRef{han2011random}{remaCor}
 }
 }

@@ -56,6 +56,6 @@ RE2C( beta, stders, Sigma)
 }
 \references{
 {
-  \insertRef{lin2009meta}{rema}
+  \insertRef{lin2009meta}{remaCor}
 }
 }

@@ -19,7 +19,7 @@ output:
     fig_width: 5
 bibliography: REFERENCES.bib
 vignette: >
-  %\VignetteIndexEntry{Random effects meta-analysis (remaCor) for correlated test statistics}
+  %\VignetteIndexEntry{remaCor: Random effects meta-analysis for correlated test statistics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\usepackage[utf8]{inputenc}

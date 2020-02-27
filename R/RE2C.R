@@ -21,11 +21,11 @@ pkg.env <- new.env()
 #' @details Perform random effect meta-analysis for correlated test statistics using RE2 method of Han and Eskin (2011), or RE2 for correlated test statistics from Han, et al., (2016).  Also uses RE2C method of Lee, Eskin and Han (2017) to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.  
 #'
 #' @references{
-#'   \insertRef{lee2017increasing}{rema}
+#'   \insertRef{lee2017increasing}{remaCor}
 #' 
-#'   \insertRef{han2016general}{rema}
+#'   \insertRef{han2016general}{remaCor}
 #' 
-#'   \insertRef{han2011random}{rema}
+#'   \insertRef{han2011random}{remaCor}
 #' }
 #'
 #' @return
@@ -100,7 +100,7 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
 
     # Load data from file
     # Originally stored in RE2C.RData
-    path <- system.file("extdata", package = "rema")
+    path <- system.file("extdata", package = "remaCor")
 
     pkg.env$RE2Cor.list <- readRDS(paste(path, 'RE2Cor.list.RDS', sep='/'))
     pkg.env$FEtlow_table <- readRDS(paste(path, 'FEtlow_table.RDS', sep='/'))

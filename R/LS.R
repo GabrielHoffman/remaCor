@@ -13,7 +13,7 @@
 #' @details Perform fixed effect meta-analysis for correlated test statistics using method of Lin and Sullivan (2009).  By default, correlation is set to identity matrix to for independent test statistics.  
 #'
 #' @references{
-#'   \insertRef{lin2009meta}{rema}
+#'   \insertRef{lin2009meta}{remaCor}
 #' }
 #'
 #' @return
