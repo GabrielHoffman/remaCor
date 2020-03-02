@@ -1,7 +1,7 @@
 # remaCor: Random effects meta-analysis for correlated test statistics
 
 <p align="center">
-<img src=https://hoffmg01.u.hpc.mssm.edu/software/remaCor/logo.png width="400">
+<img src=https://users.hpc.mssm.edu/~hoffmg01/software/remaCor/logo.png width="400">
 </p>
 
 Standard approaches to meta-analysis assumes that effect sizes are statistically independent. Here we provide methods for fixed and random effects meta-analysis when the correlation between effect sizes are known.
