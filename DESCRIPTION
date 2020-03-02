@@ -1,8 +1,8 @@
 Package: remaCor
 Type: Package
 Title: Random effects meta-analysis for correlated test statistics
-Version: 0.0.3
-Date: 2020-02-27
+Version: 0.0.4
+Date: 2020-03-02
 Author: Gabriel E. Hoffman
 Maintainer: Gabriel E. Hoffman <gabriel.hoffman@mssm.edu>
 Description: Compute random effects meta-analysis for correlated test statistics.
@@ -10,6 +10,7 @@ VignetteBuilder: knitr
 License: GPL (>= 3)
 Suggests:
     knitr,
+    metafor,
     BiocGenerics
 biocViews: 
     RNASeq,
@@ -24,7 +25,9 @@ Depends:
     R (>= 3.6.0),
     RUnit,
     clusterGeneration,
-    metafor,
+    ggplot2,
+    grid,
+    reshape2,
     methods
 Imports:
     mvtnorm,

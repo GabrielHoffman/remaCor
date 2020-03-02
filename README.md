@@ -21,7 +21,8 @@ Basic usage:
 RE2C( beta, stders, Sigma)
 ```
 
-## [See Vignette](https://hoffmg01.u.hpc.mssm.edu/software/remaCor/remaCor.html)
+## [Vignette](https://hoffmg01.u.hpc.mssm.edu/software/remaCor/remaCor.html)
+## [Manual](https://users.hpc.mssm.edu/~hoffmg01/software/remaCor/remaCor-manual.pdf)
 
 This is a developmental version.
 
