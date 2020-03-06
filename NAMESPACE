@@ -3,6 +3,7 @@
 export(LS)
 export(RE2C)
 export(metanova)
+export(plot_cor)
 export(plot_forest)
 exportClasses(metanova)
 exportMethods(print)
