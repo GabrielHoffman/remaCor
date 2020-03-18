@@ -12,6 +12,10 @@
 #'
 #' @details Perform fixed effect meta-analysis for correlated test statistics using method of Lin and Sullivan (2009).  By default, correlation is set to identity matrix to for independent test statistics.  
 #'
+#' This method requires the correlation matrix to be symmatric positive definite (PD).  If this condition is not satisfied, results will be NA.  If the matrix is not SPD, there is likely an issue with how it was generated. 
+#'
+#' However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running Matrix::nearPD( x, corr=TRUE) to produce the nearest SPD matrix to the input. 
+#'
 #' @references{
 #'   \insertRef{lin2009meta}{remaCor}
 #' }
@@ -70,17 +74,44 @@ LS <- function(beta, stders, cor=diag(1, length(beta)) ){
    if( ! is.numeric(stders) ){      
       stop("stders must be numeric")
    }
+   if( any(stders <= 0) ){      
+      stop("All values in stders must be positive")
+   }
 
    ## conventional FE approach  
    V <- diag(stders) %*% cor %*% diag(stders)
-   Vinv <- solve(V)
+
+   # invert V, if not valid then warn and return empty results
+   # Vinv <- solve(V)
+   Vinv <- tryCatch( solve(V),
+    error = function(e){
+      warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      NA
+    }
+  )  
+  if( length(Vinv) == 1 ){
+   if( is.na(Vinv) )
+      return( data.frame(beta = NA, se = NA, p = NA) )
+  }
+
    ones <- matrix(rep(1,length(beta)),nrow=1)
    
    newx <- (ones %*% Vinv %*% beta) / (ones %*% Vinv %*% t(ones))
    newv <- 1 / (ones %*% Vinv %*% t(ones))
-   newstd <- sqrt(newv)
    
-   newp <- pchisq(newx*newx/newv, 1, lower.tail=FALSE)
+   if( newv > 0 ){    
+      newstd <- sqrt(newv)  
+      newp <- pchisq(newx*newx/newv, 1, lower.tail=FALSE)
+   }else{
+      warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      newstd = NA
+      newp = NA
+   }
 
    data.frame(beta = newx, se = newstd, p = newp)
 }
+
+
+
+
+

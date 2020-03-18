@@ -25,7 +25,11 @@ Return values:
 Fixed effect meta-analysis for correlated test statistics using the Lin-Sullivan method.
 }
 \details{
-Perform fixed effect meta-analysis for correlated test statistics using method of Lin and Sullivan (2009).  By default, correlation is set to identity matrix to for independent test statistics.
+Perform fixed effect meta-analysis for correlated test statistics using method of Lin and Sullivan (2009).  By default, correlation is set to identity matrix to for independent test statistics.  
+
+This method requires the correlation matrix to be symmatric positive definite (PD).  If this condition is not satisfied, results will be NA.  If the matrix is not SPD, there is likely an issue with how it was generated. 
+
+However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running Matrix::nearPD( x, corr=TRUE) to produce the nearest SPD matrix to the input.
 }
 \examples{
 # Generate effects

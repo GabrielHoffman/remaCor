@@ -18,7 +18,11 @@ pkg.env <- new.env()
 #' @param cor correlation matrix between of test statistics.  Default considers uncorrelated test statistics 
 #' @param twoStep Apply two step version of RE2C that is designed to be applied only after the fixed effect model.
 #'
-#' @details Perform random effect meta-analysis for correlated test statistics using RE2 method of Han and Eskin (2011), or RE2 for correlated test statistics from Han, et al., (2016).  Also uses RE2C method of Lee, Eskin and Han (2017) to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.  
+#' @details Perform random effect meta-analysis for correlated test statistics using RE2 method of Han and Eskin (2011), or RE2 for correlated test statistics from Han, et al., (2016).  Also uses RE2C method of Lee, Eskin and Han (2017) to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.
+#'
+#' This method requires the correlation matrix to be symmatric positive definite (PD).  If this condition is not satisfied, results will be NA.  If the matrix is not SPD, there is likely an issue with how it was generated. 
+#'
+#' However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running Matrix::nearPD( x, corr=TRUE) to produce the nearest SPD matrix to the input. 
 #'
 #' @references{
 #'   \insertRef{lee2017increasing}{remaCor}
@@ -88,6 +92,9 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   if( ! is.numeric(stders) ){      
     stop("stders must be numeric")
   }
+  if( any(stders <= 0) ){      
+    stop("All values in stders must be positive")
+  }
 
   # Added by GH here
   # original method assumed that Sigma was already transformed
@@ -154,12 +161,31 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   # End new
   #-----------------
 
+  # empty return object
+   returnValEmpty = c(  stat1         = NA,
+                        stat2         = NA,
+                        RE2Cp         = NA,
+                        RE2Cp.twoStep = NA,
+                        QE            = NA,
+                        QEp           = NA,
+                        Isq           = NA )
+
+
   # n study numbers
   # stopifnot (length(beta) == length(stders))
   n = length(beta)
   vars <- stders ** 2
   ws <- 1/vars 
-  sigmainv <- solve(Sigma)
+  sigmainv <- tryCatch( solve(Sigma),
+    error = function(e){
+      warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      NA
+    }
+  )  
+  if( length(sigmainv) == 1){
+    if( is.na(sigmainv) )
+      return( t(returnValEmpty ) )
+  }
   beta_rv <- matrix(beta,nrow=1,ncol=n)
   ones <- matrix(rep(1,n),nrow=1,ncol=n)
   sumW <- sum(ws)
@@ -186,6 +212,17 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   etasqs <- etas^2
   xis <- L.values
   lambdas <- R.values
+
+  if( any(L.values < 0) ){
+    warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+
+      return( t(returnValEmpty ) )
+  }else{
+    if( any(R.values < 0) ){
+      warning("At least 1 eigen-value of correlation matrix (S%*% K %*% S) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      return( t(returnValEmpty ) )
+    }
+  }
 
   mle.tau2 <- NR(tau2,n,xis,etasqs,lambdas)
   Hinv <- solve(Sigma+mle.tau2*diag(n))
