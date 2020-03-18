@@ -77,7 +77,7 @@ LS <- function(beta, stders, cor=diag(1, length(beta)) ){
    ones <- matrix(rep(1,length(beta)),nrow=1)
    
    newx <- (ones %*% Vinv %*% beta) / (ones %*% Vinv %*% t(ones))
-   newv <- 1 / (ones %*% Vinv %*% t(ones))
+   newv <- abs(1 / (ones %*% Vinv %*% t(ones))) # in case newv ends up negative
    newstd <- sqrt(newv)
    
    newp <- pchisq(newx*newx/newv, 1, lower.tail=FALSE)
