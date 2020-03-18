@@ -18,15 +18,15 @@ RE2C(beta, stders, cor = diag(1, length(beta)), twoStep = FALSE)
 \value{
 Return values:
 \itemize{
-\item{stat1: }{statistic testing effect mean}
-\item{stat2: {}statistic testing effect heterogeneity}
-\item{RE2Cp: }{RE2 p-value accounting for correlelation between tests}
-\item{RE2Cp.twoStep: }{two step RE2C test after fixed effect test.  Only evaluated if twoStep==TRUE}
-\item{QE: }{test statistic for the test of (residual) heterogeneity}
-\item{QEp: }{p-value for the test of (residual) heterogeneity}
-\item{Isq: }I^2 statistic
+\item{\code{stat1}: }{statistic testing effect mean}
+\item{\code{stat2}: }{statistic testing effect heterogeneity}
+\item{\code{RE2Cp}: }{RE2 p-value accounting for correlelation between tests}
+\item{\code{RE2Cp.twoStep}: }{two step RE2C test after fixed effect test.  Only evaluated if twoStep==TRUE}
+\item{\code{QE}: }{test statistic for the test of (residual) heterogeneity}
+\item{\code{QEp}: }{p-value for the test of (residual) heterogeneity}
+\item{\code{Isq}: }I^2 statistic
 }
-QE, QEp and ISq are only evaluted if correlation is diagonal
+\code{QE}, \code{QEp} and \code{ISq} are only evaluted if correlation is diagonal
 }
 \description{
 Random effect meta-analysis for correlated test statistics using RE2C
@@ -34,9 +34,9 @@ Random effect meta-analysis for correlated test statistics using RE2C
 \details{
 Perform random effect meta-analysis for correlated test statistics using RE2 method of Han and Eskin (2011), or RE2 for correlated test statistics from Han, et al., (2016).  Also uses RE2C method of Lee, Eskin and Han (2017) to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.
 
-This method requires the correlation matrix to be symmatric positive definite (PD).  If this condition is not satisfied, results will be NA.  If the matrix is not SPD, there is likely an issue with how it was generated. 
+This method requires the correlation matrix to be symmatric positive definite (SPD).  If this condition is not satisfied, results will be NA.  If the matrix is not SPD, there is likely an issue with how it was generated. 
 
-However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running Matrix::nearPD( x, corr=TRUE) to produce the nearest SPD matrix to the input.
+However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running \code{Matrix::nearPD( x, corr=TRUE)} to produce the nearest SPD matrix to the input.
 }
 \examples{
 # Generate effects
