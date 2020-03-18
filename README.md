@@ -17,6 +17,9 @@ install_github("GabrielHoffman/remaCor")
 ## Usage
 Basic usage:
 ```r
+# Run fixed effects meta-analysis, accounting for correlation 
+LS( beta, stders, Sigma)
+
 # Run random effects meta-analysis, accounting for correlation 
 RE2C( beta, stders, Sigma)
 ```
