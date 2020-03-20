@@ -41,6 +41,7 @@ RE2C in remaCor is proposed here, but based on other work.
 
 anova is the linear model test if there were complete GWAS data.
 
+Simulations from a GWAS of 10K samples.  The imputed features explain 1e-4 of the variance in the phenotype in the GWAS.
 
 ```{r simulations, echo=FALSE, message=FALSE, results="hide"}
 library(PRROC)
@@ -53,7 +54,7 @@ library(data.table)
 set.seed(1) 
 
 n = 10000
-n_sim = 1000
+n_sim = 10000
 p_array = c(2, 5, 10, 20, 30)
 sig_array = c(0, .3, .6, .9)
 hsq = 1e-4 # fraction of variance in y explained by X
