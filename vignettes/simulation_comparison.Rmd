@@ -57,7 +57,7 @@ n = 10000
 n_sim = 10000
 p_array = c(2, 5, 10, 20, 30)
 sig_array = c(0, .3, .6, .9)
-hsq = 1e-4 # fraction of variance in y explained by X
+hsq = 5e-4 # fraction of variance in y explained by X
 
 res = lapply( sig_array, function(sig){
 
