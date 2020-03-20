@@ -5,7 +5,8 @@ author:
   affiliation: | 
     Icahn School of Medicine at Mount Sinai, New York
 abstract:
-  coming soon
+  I implemented this quickly in R based on the description of S_MultiXcan.  
+  RE2C is more powerful than S_multiXcan for large p and high correlation between features.  
 output:
   rmarkdown::html_document:
     highlight: pygments
@@ -34,7 +35,11 @@ knitr::opts_chunk$set(tidy=FALSE, cache=TRUE,
 options(width=100)
 ```	
 
-S_MultiXcan.reg is proposed by [Barbeira, et al, 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007889)
+S_MultiXcan.reg is proposed by [Barbeira, et al, 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007889).  It is like S_MultiXcan, but accounts for the fact that correlation between features can be low rank.
+
+RE2C in remaCor is proposed here, but based on other work.
+
+anova is the linear model test if there were complete GWAS data.
 
 
 ```{r simulations, echo=FALSE, message=FALSE, results="hide"}
@@ -45,10 +50,13 @@ library(ggplot2)
 library(mvtnorm)
 library(data.table)
 
+set.seed(1) 
+
 n = 10000
-n_sim = 1000
+n_sim = 100
 p_array = c(2, 5, 10, 20, 30)
 sig_array = c(0, .3, .6, .9)
+hsq = 1e-3 # fraction of variance in y explained by X
 
 res = lapply( sig_array, function(sig){
 
@@ -62,7 +70,7 @@ res = lapply( sig_array, function(sig){
     corX_inv = solve(cor(X))
 
     dcmp = eigen(cor(X))
-    incl = dcmp$values[1] / dcmp$values < 300
+    incl = dcmp$values[1] / dcmp$values < 30
 
     ev = rep(0, p)
     ev[incl] = 1/dcmp$values[incl]
@@ -71,16 +79,21 @@ res = lapply( sig_array, function(sig){
 
     res = lapply( 1:n_sim, function(i){
     	
-    	if( runif(1) < 0.1) message("\r", "sig=", sig, " p=", p, " i=", i, "     ", appendLF=FALSE)
+    	if( runif(1) < 1) message("\r", "sig=", sig, " p=", p, " i=", i, "     ", appendLF=FALSE)
 
     	isDE = (i < n_sim/2)
 
     	if( isDE){
     		beta = rnorm(p)
+        eta = X %*% beta 
+        sig_err = sqrt((1-hsq) / hsq * var(eta))
+        y = scale(eta + rnorm(n, 0, sig_err))
+        # cor(y, eta)^2
     	}else{
     		beta = rep(0, p)
+        y = scale(rnorm(n))        
     	}
-    	y = scale(X %*% beta + rnorm(n, 0, 200))
+
 
     	fit = lm(y ~ 0+X)
 
@@ -118,13 +131,13 @@ res = lapply( sig_array, function(sig){
 res = data.table(do.call("rbind", res))
 ```
 
-```{r make.plots, echo=FALSE, fig.width=12, fig.height=20, cache=FALSE}
+```{r make.plots, echo=FALSE, cache=FALSE}
 
 df_melt = melt(res, id.vars=c("sig", "p", "isDE"))
 
 df_FPR = df_melt[isDE==FALSE,data.frame(FPR=sum(value < 0.05)/length(value)),by=c("variable","p", "sig")]
 
-fig1 = ggplot(df_FPR, aes(variable, FPR, fill=variable)) + geom_bar(stat="identity")  + theme_bw(15) + theme(aspect.ratio=1, legend.position="none") + coord_flip() + ylab("FPR") + geom_hline(yintercept=0.05, linetype="dashed") + facet_wrap(~p + sig, ncol=length(sig_array)) + xlab('')
+fig1 = ggplot(df_FPR, aes(variable, FPR, fill=variable)) + geom_bar(stat="identity")  + theme_bw(15) + theme(aspect.ratio=1, legend.position="none", plot.title = element_text(hjust = 0.5)) + coord_flip() + ylab("False positive rate") + geom_hline(yintercept=0.05, linetype="dashed") + facet_wrap(~p + sig, ncol=length(sig_array)) + xlab('') + ggtitle("False positive rate under the null")
 
 
 f = function(isDE, value){
@@ -134,11 +147,24 @@ f = function(isDE, value){
 
 df_AUPR = df_melt[,data.frame(AUPR=f(isDE, value)),by=c("variable","p", "sig")]
 
-fig2 = ggplot(df_AUPR, aes(variable, AUPR, fill=variable)) + theme_bw(15) + theme(aspect.ratio=1, legend.position="none") + coord_flip() + geom_bar(stat="identity") + ylab("AUPR") + facet_wrap(~p + sig, ncol=length(sig_array)) + xlab('')
-
-grid.arrange(fig1, fig2, ncol=1)
+fig2 = ggplot(df_AUPR, aes(variable, AUPR, fill=variable)) + theme_bw(15) + theme(aspect.ratio=1, legend.position="none", plot.title = element_text(hjust = 0.5)) + coord_flip() + geom_bar(stat="identity") + ylab("AUPR") + facet_wrap(~p + sig, ncol=length(sig_array)) + xlab('') + ggtitle("Area under precision recall curve")
 ```
 
- RE2C is more powerful than multiXcan for large p and high correlation between features
+# Performance 
+First value, p, is the number of features.  Second value, sigma, is the pairwise correlation between the features.
+
+### False positive rate
+Needs a lot of simulations to estimate this accurately, here only `r n_sim` simulations.
+```{r fig.width=16, fig.height=16, echo=FALSE, results="hide", cache=FALSE}
+fig1
+```
+
+### Performance
+RE2C is more powerful than S_multiXcan for large p and high correlation between features
+```{r fig.width=16, fig.height=16, echo=FALSE, results="hide", cache=FALSE}
+fig2
+```
+
+
 
 
