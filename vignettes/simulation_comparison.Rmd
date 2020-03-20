@@ -1,0 +1,144 @@
+---
+title: "Multivariate transcriptome-wide association study (MulTiWas)"
+author:
+- name: "[Gabriel Hoffman](http://gabrielhoffman.github.io)"
+  affiliation: | 
+    Icahn School of Medicine at Mount Sinai, New York
+abstract:
+  coming soon
+output:
+  rmarkdown::html_document:
+    highlight: pygments
+    toc: false
+    toc_depth: 3
+    fig_width: 5
+vignette: >
+  %\VignetteIndexEntry{MulTiWAS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\usepackage[utf8]{inputenc}
+---
+
+<!---
+cd /Users/gabrielhoffman/workspace/repos
+R
+library('knitr')
+rmarkdown::render('remaCor/vignettes/simulation_comparison.Rmd')
+--->
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(tidy=FALSE, cache=TRUE,
+                      dev=c("png", "pdf"),
+                      package.startup.message = FALSE,
+                      message=FALSE, error=FALSE, warning=TRUE)
+options(width=100)
+```	
+
+S_MultiXcan.reg is proposed by [Barbeira, et al, 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007889)
+
+
+```{r simulations, echo=FALSE, message=FALSE, results="hide"}
+library(PRROC)
+library(remaCor)
+library(gridExtra)
+library(ggplot2)
+library(mvtnorm)
+library(data.table)
+
+n = 10000
+n_sim = 1000
+p_array = c(2, 5, 10, 20, 30)
+sig_array = c(0, .3, .6, .9)
+
+res = lapply( sig_array, function(sig){
+
+  res = lapply(p_array, function(p){
+    Sigma = matrix(sig, p,p)
+    diag(Sigma) = 1
+    X = rmvnorm(n, sigma=Sigma)
+
+    corX = cor(X) 
+    scpX = solve(crossprod(X))
+    corX_inv = solve(cor(X))
+
+    dcmp = eigen(cor(X))
+    incl = dcmp$values[1] / dcmp$values < 300
+
+    ev = rep(0, p)
+    ev[incl] = 1/dcmp$values[incl]
+
+    corX_ginv = dcmp$vectors %*% tcrossprod(diag(ev), dcmp$vectors)
+
+    res = lapply( 1:n_sim, function(i){
+    	
+    	if( runif(1) < 0.1) message("\r", "sig=", sig, " p=", p, " i=", i, "     ", appendLF=FALSE)
+
+    	isDE = (i < n_sim/2)
+
+    	if( isDE){
+    		beta = rnorm(p)
+    	}else{
+    		beta = rep(0, p)
+    	}
+    	y = scale(X %*% beta + rnorm(n, 0, 200))
+
+    	fit = lm(y ~ 0+X)
+
+    	# coef: multivariate
+    	g = coef(fit)
+
+    	# coef: univariate
+    	res_uni = t(apply(X, 2, function(x){
+    		coef(summary(lm(y ~ 0 + x)))[,c(1,3)]
+    	}))
+    	gamma = res_uni[,1]
+
+    	# get multivariate coef from univariate
+    	# g_est = solve(crossprod(X)) %*% diag(n-1, p) %*% gamma
+    	g_est = scpX %*% ((n-1)* gamma)
+    	#  plot(g_est, g)
+    	# v_g_est = solve(crossprod(X))
+
+    	stat = crossprod(res_uni[,2], corX_inv) %*% res_uni[,2]
+    	statg = crossprod(res_uni[,2], corX_ginv) %*% res_uni[,2]
+
+    	data.frame( sig = sig,
+            p = p, 
+            isDE = isDE,
+    				anova = anova(fit)[,'Pr(>F)'][1],
+    				S_MultiXcan = pchisq(stat, p, lower.tail=FALSE),
+    				S_MultiXcan.reg = pchisq(statg, p, lower.tail=FALSE),
+    				RE2C = RE2C( res_uni[,2], stders = rep(1, p), corX)$RE2Cp)
+
+    })
+    do.call("rbind", res)
+  })
+  do.call("rbind", res)
+})
+res = data.table(do.call("rbind", res))
+```
+
+```{r make.plots, echo=FALSE, fig.width=12, fig.height=20, cache=FALSE}
+
+df_melt = melt(res, id.vars=c("sig", "p", "isDE"))
+
+df_FPR = df_melt[isDE==FALSE,data.frame(FPR=sum(value < 0.05)/length(value)),by=c("variable","p", "sig")]
+
+fig1 = ggplot(df_FPR, aes(variable, FPR, fill=variable)) + geom_bar(stat="identity")  + theme_bw(15) + theme(aspect.ratio=1, legend.position="none") + coord_flip() + ylab("FPR") + geom_hline(yintercept=0.05, linetype="dashed") + facet_wrap(~p + sig, ncol=length(sig_array)) + xlab('')
+
+
+f = function(isDE, value){
+  pr = pr.curve( -log10(value[isDE==TRUE]), -log10(value[isDE==FALSE]) )
+  pr$auc.integral
+}
+
+df_AUPR = df_melt[,data.frame(AUPR=f(isDE, value)),by=c("variable","p", "sig")]
+
+fig2 = ggplot(df_AUPR, aes(variable, AUPR, fill=variable)) + theme_bw(15) + theme(aspect.ratio=1, legend.position="none") + coord_flip() + geom_bar(stat="identity") + ylab("AUPR") + facet_wrap(~p + sig, ncol=length(sig_array)) + xlab('')
+
+grid.arrange(fig1, fig2, ncol=1)
+```
+
+ RE2C is more powerful than multiXcan for large p and high correlation between features
+
+
