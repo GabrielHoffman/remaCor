@@ -55,6 +55,9 @@ plot_forest = function( beta, stders){
 	}else if( is(beta, "vector") ){
 		ID = names(beta)
 	}
+	if( is.null(ID) ){
+		stop("Cannot extract rownames() or names() from beta")
+	}
 	# if( ! identical(ID, rownames(cor)) ){
 	# 	stop("names of beta doesn't match rownames(cor)")
 	# }
@@ -111,7 +114,7 @@ plot_cor = function( cor ){
 	df2$Var1 = factor(df2$Var1, ID)
 	df2$Var2 = factor(df2$Var2, rev(ID))
 
-	ggplot(df2, aes(Var1, Var2, fill=value)) + geom_tile() + scale_fill_gradient2(name = "Correlation", low="blue", mid="white", high="red", limits=c(-1, 1)) + xlab("") + ylab("") + theme_minimal() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), aspect.ratio=1) 
+	ggplot(df2, aes(Var1, Var2, fill=value)) + geom_tile() + scale_fill_gradient2(name = "Correlation", low="blue", mid="white", high="red", limits=c(-1, 1)) + xlab("") + ylab("") + theme_minimal() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), aspect.ratio=1, axis.text.x = element_text(angle = 90, hjust = 1)) 
 }
 
 

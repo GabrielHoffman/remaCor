@@ -35,13 +35,19 @@ knitr::opts_chunk$set(tidy=FALSE, cache=TRUE,
 options(width=100)
 ```	
 
-S_MultiXcan.reg is proposed by [Barbeira, et al, 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007889).  It is like S_MultiXcan, but accounts for the fact that correlation between features can be low rank.
+- S_MultiXcan: Multivariate PredXcan from [Barbeira, et al, 2019](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1007889)
+- S_MultiXcan.reg: like S_MultiXcan, but accounts for the fact that correlation between features can be low rank.
 
-RE2C in remaCor is proposed here, but based on other work.
+- RE2C in remaCor is proposed here, but based on other work.
+- anova is the linear model test if there were complete GWAS data.
 
-anova is the linear model test if there were complete GWAS data.
+Simulations from a GWAS of 10K samples.  The imputed features explain 1e-4 of the variance in the phenotype in the GWAS. The correlations are all positive and equal.  Power decrease as p increases because now more features are needed to explain the same heritability.
 
-Simulations from a GWAS of 10K samples.  The imputed features explain 1e-4 of the variance in the phenotype in the GWAS.
+
+Based on my reading, it seems that S-MultiXcan has only for single features across tissues.  Moreover, it seems like they used only a single tissue x times covariance matrix, rather than a group-wise covariance matrix.  Ask authors?  
+
+also see https://www.nature.com/articles/s41588-018-0154-4
+
 
 ```{r simulations, echo=FALSE, message=FALSE, results="hide"}
 library(PRROC)
@@ -165,6 +171,22 @@ RE2C is more powerful than S_multiXcan for large p and high correlation between 
 ```{r fig.width=16, fig.height=16, echo=FALSE, results="hide", cache=FALSE}
 fig2
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

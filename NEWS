@@ -1,3 +1,7 @@
+v 0.0.6 May 20, 2020
+-------------------------
+	- Fixed bugs with plotting
+
 v 0.0.5 March 18, 2020
 -------------------------
 	- Better warning messages when correlation is not positive definite

@@ -1,8 +1,8 @@
 Package: remaCor
 Type: Package
 Title: Random effects meta-analysis for correlated test statistics
-Version: 0.0.5
-Date: 2020-03-18
+Version: 0.0.6
+Date: 2020-05-20
 Author: Gabriel E. Hoffman
 Maintainer: Gabriel E. Hoffman <gabriel.hoffman@mssm.edu>
 Description: Compute random effects meta-analysis for correlated test statistics.
@@ -35,4 +35,4 @@ Imports:
     Rdpack,
     stats
 RdMacros: Rdpack 
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
