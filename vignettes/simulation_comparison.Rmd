@@ -59,8 +59,8 @@ library(data.table)
 
 set.seed(1) 
 
-n = 10000
-n_sim = 10000
+n = 1000
+n_sim = 1000
 p_array = c(2, 5, 10, 20, 30)
 sig_array = c(0, .3, .6, .9)
 hsq = 5e-4 # fraction of variance in y explained by X
