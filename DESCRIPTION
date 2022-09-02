@@ -11,18 +11,7 @@ License: Artistic-2.0
 URL: https://github.com/GabrielHoffman/remaCor
 BugReports: https://github.com/GabrielHoffman/remaCor/issues
 Suggests:
-    knitr,
-    metafor,
-    BiocGenerics
-biocViews: 
-    RNASeq,
-    GeneExpression,
-    DifferentialExpression,
-    Regression,
-    FunctionalGenomics,
-    Transcriptomics,
-    GenomeWideAssociation,
-    Software
+    knitr
 Depends:
     R (>= 3.6.0),
     RUnit,

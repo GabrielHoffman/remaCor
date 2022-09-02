@@ -1,1 +1,2 @@
-BiocGenerics:::testPackage("remaCor")
+# BiocGenerics:::testPackage("remaCor")
+
