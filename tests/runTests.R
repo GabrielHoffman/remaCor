@@ -1,1 +1,1 @@
-BiocGenerics:::testPackage("RE2C")
+BiocGenerics:::testPackage("remaCor")

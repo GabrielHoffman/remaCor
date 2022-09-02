@@ -1,15 +1,9 @@
 ---
-title: "remaCor: Random effects meta-analysis for correlated test statistics"
+title: "Random effects meta-analysis for correlated test statistics"
 author:
 - name: "[Gabriel Hoffman](http://gabrielhoffman.github.io)"
   affiliation: | 
     Icahn School of Medicine at Mount Sinai, New York
-abstract: > 
-  Standard approaches to meta-analysis assumes that effect sizes are statistically independent.  Here we provide methods for fixed and random effects meta-analysis when the correlation between effect sizes are known.
-
-
-  remaCor v`r packageVersion("remaCor")`<br> 
-  `r format(Sys.time(),'%B %d, %Y %H:%M:%S')`<br>  
 
 output:
   rmarkdown::html_document:
@@ -17,7 +11,7 @@ output:
     toc: false
     toc_depth: 3
     fig_width: 5
-bibliography: REFERENCES.bib
+bibliography: ../inst/REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{remaCor: Random effects meta-analysis for correlated test statistics}
   %\VignetteEngine{knitr::rmarkdown}
@@ -25,29 +19,25 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
-<!---
-cd /Users/gabrielhoffman/workspace/repos
-R
-library('knitr')
-rmarkdown::render('remaCor/vignettes/remaCor.Rmd')
-# scp remaCor/vignettes/remaCor.html sklar1:/sc/orga/work/hoffmg01/software/remaCor
---->
-
 ```{r setup, echo=FALSE, results="hide"}
 knitr::opts_chunk$set(tidy=FALSE, cache=TRUE,
                       dev="png",
                       package.startup.message = FALSE,
                       message=FALSE, error=FALSE, warning=TRUE)
-options(width=100)
 ```	
 
+<style>
+body {
+text-align: justify}
+</style>
 
-### Description
-#### Fixed effects meta-analysis
+Standard approaches to meta-analysis assumes that effect sizes are statistically independent.  Here we provide methods for fixed and random effects meta-analysis when the correlation between effect sizes are known.
+
+### Fixed effects meta-analysis
 
 `LS()` implements fixed effect meta-analysis for correlated test statistics using method of @lin2009meta.  By default, correlation is set to identity matrix to for independent test statistics.  
 
-#### Random effects  meta-analysis
+### Random effects  meta-analysis
 
 `RE2C()` implements random effect meta-analysis for correlated test statistics that jointly tests deviation of the mean from zero as well as effect size heterogenity.  This method uses the RE2 method of @han2011random, or RE2 for correlated test statistics from @han2016general.   By default, correlation is set to identity matrix to for independent test statistics.  (In addition, this function computes the two step RE2C method of @lee2017increasing to further test for heterogenity in effect size after applying a fixed effect test.)
 
@@ -72,7 +62,7 @@ options(width=100)
 
 
 ### Examples
-```{r rema, results='hide'}
+```{r rema}
 library(remaCor)
 library(metafor)
 
@@ -87,11 +77,11 @@ stders = rep(.1, n)
 
 # Standard fixed effects meta-analysis
 # of independent effects with metafor pacakge
-rma( beta, stders, method="FE")
+rma( beta, sei=stders, method="FE")
 
 # Standard random effects meta-analysis
 # of independent effects with metafor pacakge
-rma( beta, stders, method="REML")
+rma( beta, sei=stders, method="REML")
 
 # Run fixed effects meta-analysis, assume identity correlation  
 # Use Lin-Sullivan method
@@ -117,8 +107,10 @@ RE2C( beta, stders, Sigma)
 
 
 # Session info
+<details>
 ```{r sessionInfo}
 sessionInfo()
 ```
+</details>
 
 ## References

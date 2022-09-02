@@ -72,7 +72,7 @@ pkg.env <- new.env()
 #' # account for correlation 
 #' RE2C( beta, stders, Sigma)
 #'
-#' @import stats RUnit clusterGeneration
+#' @import stats RUnit clusterGeneration Rdpack
 #' @export
 RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
 

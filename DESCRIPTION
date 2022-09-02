@@ -1,14 +1,15 @@
-Package: remaCor
 Type: Package
-Title: Random effects meta-analysis for correlated test statistics
-Version: 0.0.6
-Date: 2020-05-20
-Author: Gabriel E. Hoffman
-Maintainer: Gabriel E. Hoffman <gabriel.hoffman@mssm.edu>
-Description: Compute random effects meta-analysis for correlated test statistics.
-VignetteBuilder: knitr
+Package: remaCor
+Title: Random Effects Meta-Analysis for Correlated Test Statistics
+Version: 0.0.8
+Date: 2022-09-02
+Authors@R: 
+    person("Gabriel", "Hoffman", , "gabriel.hoffman@mssm.edu", role = c("aut", "cre"))
+Description: Compute random effects meta-analysis for correlated test
+    statistics.
+License: Artistic-2.0
 URL: https://github.com/GabrielHoffman/remaCor
-License: GPL (>= 3)
+BugReports: https://github.com/GabrielHoffman/remaCor/issues
 Suggests:
     knitr,
     metafor,
@@ -35,5 +36,7 @@ Imports:
     compiler,
     Rdpack,
     stats
-RdMacros: Rdpack 
-RoxygenNote: 7.1.0
+VignetteBuilder: knitr
+RdMacros: Rdpack
+Encoding: UTF-8
+RoxygenNote: 7.2.1

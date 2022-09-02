@@ -1,8 +1,0 @@
-pandoc: 2.11.3.2
-pkgdown: 1.6.1
-pkgdown_sha: ~
-articles:
-  remaCor: remaCor.html
-  simulation_comparison: simulation_comparison.html
-last_built: 2021-04-05T18:05Z
-
