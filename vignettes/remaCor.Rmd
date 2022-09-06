@@ -42,22 +42,22 @@ Standard approaches to meta-analysis assumes that effect sizes are statistically
 `RE2C()` implements random effect meta-analysis for correlated test statistics that jointly tests deviation of the mean from zero as well as effect size heterogenity.  This method uses the RE2 method of @han2011random, or RE2 for correlated test statistics from @han2016general.   By default, correlation is set to identity matrix to for independent test statistics.  (In addition, this function computes the two step RE2C method of @lee2017increasing to further test for heterogenity in effect size after applying a fixed effect test.)
 
 
-  * stat1: statistic testing effect mean
+  * `stat1`: statistic testing effect mean
 
-  * stat2: statistic testing effect heterogeneity
+  * `stat2`: statistic testing effect heterogeneity
 
-  * RE2Cp: RE2 p-value accounting for correlelation between tests. (This is the p-value appropriate for most questions)
+  * `RE2Cp`: RE2 p-value accounting for correlelation between tests. (This is the p-value appropriate for most questions)
 
-  * RE2Cp.twoStep: two step RE2C test after fixed effect test.
-            Only evaluated if twoStep==TRUE.  (not typically used)
+  * `RE2Cp.twoStep`: two step RE2C test after fixed effect test.
+            Only evaluated if `twoStep==TRUE`.  (not typically used)
 
-  * QE: test statistic for the test of (residual) heterogeneity
+  * `QE`: test statistic for the test of (residual) heterogeneity
 
-  * QEp: p-value for the test of (residual) heterogeneity
+  * `QEp`: p-value for the test of (residual) heterogeneity
 
-  * Isq: I^2 statistic
+  * `Isq`: I^2 statistic
 
-    QE, QEp and ISq are only evaluted if correlation is diagonal
+    `QE`, `QEp` and `Isq` are only evaluted if correlation is diagonal
 
 
 

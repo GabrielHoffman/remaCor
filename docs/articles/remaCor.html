@@ -116,18 +116,23 @@ two step RE2C method of <span class="citation">Lee, Eskin, and Han
 (2017)</span> to further test for heterogenity in effect size after
 applying a fixed effect test.)</p>
 <ul>
-<li><p>stat1: statistic testing effect mean</p></li>
-<li><p>stat2: statistic testing effect heterogeneity</p></li>
-<li><p>RE2Cp: RE2 p-value accounting for correlelation between tests.
-(This is the p-value appropriate for most questions)</p></li>
-<li><p>RE2Cp.twoStep: two step RE2C test after fixed effect test. Only
-evaluated if twoStep==TRUE. (not typically used)</p></li>
-<li><p>QE: test statistic for the test of (residual)
+<li><p><code>stat1</code>: statistic testing effect mean</p></li>
+<li><p><code>stat2</code>: statistic testing effect
 heterogeneity</p></li>
-<li><p>QEp: p-value for the test of (residual) heterogeneity</p></li>
+<li><p><code>RE2Cp</code>: RE2 p-value accounting for correlelation
+between tests. (This is the p-value appropriate for most
+questions)</p></li>
+<li><p><code>RE2Cp.twoStep</code>: two step RE2C test after fixed effect
+test. Only evaluated if <code>twoStep==TRUE</code>. (not typically
+used)</p></li>
+<li><p><code>QE</code>: test statistic for the test of (residual)
+heterogeneity</p></li>
+<li><p><code>QEp</code>: p-value for the test of (residual)
+heterogeneity</p></li>
 <li>
-<p>Isq: I^2 statistic</p>
-<p>QE, QEp and ISq are only evaluted if correlation is diagonal</p>
+<p><code>Isq</code>: I^2 statistic</p>
+<p><code>QE</code>, <code>QEp</code> and <code>Isq</code> are only
+evaluted if correlation is diagonal</p>
 </li>
 </ul>
 </div>
