@@ -3,8 +3,9 @@
 #' Forest plot of coefficients 
 #'
 #' @param beta regression coefficients from each analysis
-#' @param stders standard errors corresponding to betas
-# @param cor correlation matrix between of test statistics.  Default considers uncorrelated test statistics   
+#' @param stders standard errors corresponding to betas 
+#'
+#' @return Forest plot of effect sizes and standard errors
 #'
 #' @examples
 #' # Generate effects
@@ -25,12 +26,12 @@
 #' RE2C( beta, stders, Sigma)
 #'
 #' # Make plot
-#' plot_forest( beta, stders )
+#' plotForest( beta, stders )
 #'
 #' @import stats
 #' @import ggplot2
 #' @export
-plot_forest = function( beta, stders){
+plotForest = function( beta, stders){
 
 	# check arguments
 	if( length(beta) != length(stders) ){
@@ -78,6 +79,8 @@ plot_forest = function( beta, stders){
 #'
 #' @param cor correlation matrix between of test statistics.  Default considers uncorrelated test statistics   
 #'
+#' @return Plot of correlation matrix
+#'
 #' @examples
 #' # Generate effects
 #' library(mvtnorm)
@@ -97,14 +100,14 @@ plot_forest = function( beta, stders){
 #' RE2C( beta, stders, Sigma)
 #'
 #' # Make plot
-#' plot_cor( Sigma )
+#' plotCor( Sigma )
 #'
 #' @import stats
 #' @import ggplot2
 #' @import grid
 #' @importFrom reshape2 melt
 #' @export
-plot_cor = function( cor ){
+plotCor = function( cor ){
 
 	Var1 = Var2 = value = NA # Pass R CMD check
 

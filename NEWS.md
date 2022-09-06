@@ -1,4 +1,8 @@
 
+# remaCor 0.0.9
+ - Sept 6, 2022
+ - Improve documentation
+
 # remaCor 0.0.8
  - Sept 2, 2022
  - Submit to CRAN

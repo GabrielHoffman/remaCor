@@ -2,8 +2,8 @@
 
 export(LS)
 export(RE2C)
-export(plot_cor)
-export(plot_forest)
+export(plotCor)
+export(plotForest)
 import(RUnit)
 import(Rdpack)
 import(clusterGeneration)
