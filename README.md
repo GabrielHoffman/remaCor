@@ -26,5 +26,5 @@ RE2C( beta, stders, Sigma)
 
 ## Install from GitHub
 ```r
-devtools::install_github("GabrielHoffman/remaCor")
+devtools::install_github("DiseaseNeurogenomics/remaCor")
 ```

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">remaCor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/GabrielHoffman/remaCor/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/DiseaseNeurogenomics/remaCor/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -44,7 +44,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Fixed effect meta-analysis for correlated test statistics</h1>
-      <small class="dont-index">Source: <a href="https://github.com/GabrielHoffman/remaCor/blob/HEAD/R/LS.R" class="external-link"><code>R/LS.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/DiseaseNeurogenomics/remaCor/blob/HEAD/R/LS.R" class="external-link"><code>R/LS.R</code></a></small>
       <div class="d-none name"><code>LS.Rd</code></div>
     </div>
 
@@ -108,25 +108,25 @@
 <span class="r-in"><span><span class="co"># assume identity correlation  </span></span></span>
 <span class="r-in"><span><span class="fu">LS</span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        beta   se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.4272918 0.05 1.276098e-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.3057004 0.05 9.715939e-10</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run random effects meta-analysis,</span></span></span>
 <span class="r-in"><span><span class="co"># assume identity correlation  </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     stat1    stat2         RE2Cp RE2Cp.twoStep       QE          QEp      Isq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 73.0313 402.6386 1.475558e-104            NA 425.3046 7.304323e-92 99.29462</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1    stat2        RE2Cp RE2Cp.twoStep       QE          QEp      Isq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 37.38109 38.99099 8.538511e-18            NA 53.35358 1.541208e-11 94.37713</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
 <span class="r-in"><span><span class="co"># account for correlation </span></span></span>
 <span class="r-in"><span><span class="fu">LS</span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       beta         se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.328416 0.05825681 1.726534e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        beta         se            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.3258439 0.04616216 1.680937e-12</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run random effects meta-analysis,</span></span></span>
 <span class="r-in"><span><span class="co"># account for correlation </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1    stat2         RE2Cp RE2Cp.twoStep QE QEp Isq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 31.78009 466.6195 1.938984e-109            NA NA  NA  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1    stat2        RE2Cp RE2Cp.twoStep QE QEp Isq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 49.82494 42.83821 2.595684e-21            NA NA  NA  NA</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
