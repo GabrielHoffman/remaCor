@@ -140,6 +140,30 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   
   NR <- test_n( nstudy )
 
+  ## GH: Include check of correlation matrix here
+  # This detects singular matrix, and fails gracefully
+  ####################################################
+
+  # empty return object
+   returnValEmpty = c(  stat1         = NA,
+                        stat2         = NA,
+                        RE2Cp         = NA,
+                        RE2Cp.twoStep = NA,
+                        QE            = NA,
+                        QEp           = NA,
+                        Isq           = NA )
+
+  sigmainv <- tryCatch( solve(Sigma),
+    error = function(e){
+      warning("Covariance matrix is not invertable. Returning NA values.")
+      NA
+    }
+  )  
+  if( length(sigmainv) == 1){
+    if( is.na(sigmainv) )
+      return( t(returnValEmpty ) )
+  }
+
   ## finite sample sizes correction factors
   ##########################################
   RE2Cor <- pkg.env$RE2Cor.list[[min(nstudy-1,6)]]
@@ -161,31 +185,21 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   # End new
   #-----------------
 
-  # empty return object
-   returnValEmpty = c(  stat1         = NA,
-                        stat2         = NA,
-                        RE2Cp         = NA,
-                        RE2Cp.twoStep = NA,
-                        QE            = NA,
-                        QEp           = NA,
-                        Isq           = NA )
-
-
   # n study numbers
   # stopifnot (length(beta) == length(stders))
   n = length(beta)
   vars <- stders ** 2
   ws <- 1/vars 
-  sigmainv <- tryCatch( solve(Sigma),
-    error = function(e){
-      warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
-      NA
-    }
-  )  
-  if( length(sigmainv) == 1){
-    if( is.na(sigmainv) )
-      return( t(returnValEmpty ) )
-  }
+  # sigmainv <- tryCatch( solve(Sigma),
+  #   error = function(e){
+  #     warning("At least 1 eigen-value of correlation matrix (cor) is non-positive,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+  #     NA
+  #   }
+  # )  
+  # if( length(sigmainv) == 1){
+  #   if( is.na(sigmainv) )
+  #     return( t(returnValEmpty ) )
+  # }
   beta_rv <- matrix(beta,nrow=1,ncol=n)
   ones <- matrix(rep(1,n),nrow=1,ncol=n)
   sumW <- sum(ws)
@@ -214,12 +228,12 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   lambdas <- R.values
 
   if( any(L.values < 0) ){
-    warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      warning("Covariance matrix is not invertable. Returning NA values.")
 
       return( t(returnValEmpty ) )
   }else{
     if( any(R.values < 0) ){
-      warning("At least 1 eigen-value of correlation matrix (S%*% K %*% S) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      warning("Covariance matrix is not invertable. Returning NA values.")
       return( t(returnValEmpty ) )
     }
   }

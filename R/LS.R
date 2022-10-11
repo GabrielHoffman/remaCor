@@ -85,7 +85,7 @@ LS <- function(beta, stders, cor=diag(1, length(beta)) ){
    # Vinv <- solve(V)
    Vinv <- tryCatch( solve(V),
     error = function(e){
-      warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      warning("Covariance matrix is not invertable. Returning NA values.")
       NA
     }
   )  
@@ -103,7 +103,7 @@ LS <- function(beta, stders, cor=diag(1, length(beta)) ){
       newstd <- sqrt(newv)  
       newp <- pchisq(newx*newx/newv, 1, lower.tail=FALSE)
    }else{
-      warning("At least 1 eigen-value of correlation matrix (cor) is negative,\nso the matrix is not a valid (i.e. positive definite) correlation matrix.\nConsider using Matrix::nearPD().")
+      warning("Covariance matrix is not invertable. Returning NA values.")
       newstd = NA
       newp = NA
    }
