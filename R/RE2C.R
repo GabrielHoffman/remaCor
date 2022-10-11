@@ -153,12 +153,13 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
                         QEp           = NA,
                         Isq           = NA )
 
-  sigmainv <- tryCatch( solve(Sigma),
+  sigmainv <- tryCatch( solve(Sigma, tol=.Machine$double.eps^.6),
     error = function(e){
       warning("Covariance matrix is not invertable. Returning NA values.")
       NA
     }
   )  
+
   if( length(sigmainv) == 1){
     if( is.na(sigmainv) )
       return( t(returnValEmpty ) )
