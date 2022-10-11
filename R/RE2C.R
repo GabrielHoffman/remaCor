@@ -145,13 +145,14 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   ####################################################
 
   # empty return object
-   returnValEmpty = c(  stat1         = NA,
+  returnValEmpty = c(  stat1         = NA,
                         stat2         = NA,
                         RE2Cp         = NA,
                         RE2Cp.twoStep = NA,
                         QE            = NA,
                         QEp           = NA,
                         Isq           = NA )
+  returnValEmpty = data.frame( t(returnValEmpty) )
 
   sigmainv <- tryCatch( solve(Sigma, tol=.Machine$double.eps^.6),
     error = function(e){
@@ -162,7 +163,7 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
 
   if( length(sigmainv) == 1){
     if( is.na(sigmainv) )
-      return( t(returnValEmpty ) )
+      return( returnValEmpty )
   }
 
   ## finite sample sizes correction factors
@@ -231,11 +232,11 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
   if( any(L.values < 0) ){
       warning("Covariance matrix is not invertable. Returning NA values.")
 
-      return( t(returnValEmpty ) )
+      return( returnValEmpty )
   }else{
     if( any(R.values < 0) ){
       warning("Covariance matrix is not invertable. Returning NA values.")
-      return( t(returnValEmpty ) )
+      return( returnValEmpty )
     }
   }
 
