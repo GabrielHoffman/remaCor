@@ -128,16 +128,16 @@ text-align: justify}
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Fixed-Effects Model (k = 4)</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## I^2 (total heterogeneity / total variability):   96.19%</span></span>
-<span><span class="co">## H^2 (total variability / sampling variability):  26.26</span></span>
+<span><span class="co">## I^2 (total heterogeneity / total variability):   79.57%</span></span>
+<span><span class="co">## H^2 (total variability / sampling variability):  4.90</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 3) = 78.7709, p-val &lt; .0001</span></span>
+<span><span class="co">## Q(df = 3) = 14.6865, p-val = 0.0021</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## estimate      se     zval    pval    ci.lb    ci.ub      </span></span>
-<span><span class="co">##  -0.3979  0.0500  -7.9579  &lt;.0001  -0.4959  -0.2999  *** </span></span>
+<span><span class="co">##  -0.3363  0.0500  -6.7264  &lt;.0001  -0.4343  -0.2383  *** </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
@@ -148,18 +148,18 @@ text-align: justify}
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Random-Effects Model (k = 4; tau^2 estimator: REML)</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0.2526 (SE = 0.2144)</span></span>
-<span><span class="co">## tau (square root of estimated tau^2 value):      0.5026</span></span>
-<span><span class="co">## I^2 (total heterogeneity / total variability):   96.19%</span></span>
-<span><span class="co">## H^2 (total variability / sampling variability):  26.26</span></span>
+<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0.0390 (SE = 0.0400)</span></span>
+<span><span class="co">## tau (square root of estimated tau^2 value):      0.1974</span></span>
+<span><span class="co">## I^2 (total heterogeneity / total variability):   79.57%</span></span>
+<span><span class="co">## H^2 (total variability / sampling variability):  4.90</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 3) = 78.7709, p-val &lt; .0001</span></span>
+<span><span class="co">## Q(df = 3) = 14.6865, p-val = 0.0021</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## estimate      se     zval    pval    ci.lb   ci.ub    </span></span>
-<span><span class="co">##  -0.3979  0.2562  -1.5530  0.1204  -0.9001  0.1043    </span></span>
+<span><span class="co">## estimate      se     zval    pval    ci.lb    ci.ub     </span></span>
+<span><span class="co">##  -0.3363  0.1106  -3.0401  0.0024  -0.5531  -0.1195  ** </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
@@ -168,25 +168,25 @@ text-align: justify}
 <span><span class="co"># Use Lin-Sullivan method</span></span>
 <span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##         beta   se            p</span></span>
-<span><span class="co">## 1 -0.3978948 0.05 1.749888e-15</span></span></code></pre>
+<span><span class="co">## 1 -0.3363204 0.05 1.739015e-11</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, accounting for correlation  </span></span>
 <span><span class="co"># Use Lin-Sullivan method</span></span>
 <span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##         beta         se           p</span></span>
-<span><span class="co">## 1 -0.3541345 0.04011981 1.07595e-18</span></span></code></pre>
+<pre><code><span><span class="co">##         beta         se            p</span></span>
+<span><span class="co">## 1 -0.3706701 0.05293696 2.521473e-12</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, assume identity correlation  </span></span>
 <span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##      stat1    stat2       RE2Cp RE2Cp.twoStep       QE         QEp      Isq</span></span>
-<span><span class="co">## 1 63.32812 62.84992 1.24868e-28            NA 78.77092 5.63181e-17 96.19149</span></span></code></pre>
+<pre><code><span><span class="co">##      stat1    stat2        RE2Cp RE2Cp.twoStep      QE         QEp      Isq</span></span>
+<span><span class="co">## 1 45.24458 5.483964 3.301956e-12            NA 14.6865 0.002105132 79.57308</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, accounting for correlation </span></span>
 <span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##      stat1   stat2        RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 77.91457 48.7281 1.082422e-28            NA NA  NA  NA</span></span></code></pre>
-<pre><code><span><span class="co">##      stat1   stat2        RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 77.91457 48.7281 1.082422e-28            NA NA  NA  NA</span></span></code></pre>
+<pre><code><span><span class="co">##      stat1 stat2      RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
+<span><span class="co">## 1 49.02946     0 8.2637e-12            NA NA  NA  NA</span></span></code></pre>
+<pre><code><span><span class="co">##      stat1 stat2      RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
+<span><span class="co">## 1 49.02946     0 8.2637e-12            NA NA  NA  NA</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
@@ -221,15 +221,15 @@ text-align: justify}
 <span><span class="co">##  [1] xfun_0.33         bslib_0.4.0       purrr_0.3.5       lattice_0.20-45  </span></span>
 <span><span class="co">##  [5] colorspace_2.0-3  vctrs_0.4.2       htmltools_0.5.3   yaml_2.3.5       </span></span>
 <span><span class="co">##  [9] utf8_1.2.2        rlang_1.0.6       pkgdown_2.0.6     jquerylib_0.1.4  </span></span>
-<span><span class="co">## [13] pillar_1.8.1      glue_1.6.2        withr_2.5.0       lifecycle_1.0.2  </span></span>
+<span><span class="co">## [13] pillar_1.8.1      glue_1.6.2        withr_2.5.0       lifecycle_1.0.3  </span></span>
 <span><span class="co">## [17] plyr_1.8.7        stringr_1.4.1     munsell_0.5.0     gtable_0.3.1     </span></span>
-<span><span class="co">## [21] ragg_1.2.3        codetools_0.2-18  memoise_2.0.1     evaluate_0.16    </span></span>
+<span><span class="co">## [21] ragg_1.2.3        codetools_0.2-18  memoise_2.0.1     evaluate_0.17    </span></span>
 <span><span class="co">## [25] knitr_1.40        fastmap_1.1.0     fansi_1.0.3       Rcpp_1.0.9       </span></span>
 <span><span class="co">## [29] scales_1.2.1      cachem_1.0.6      desc_1.4.2        jsonlite_1.8.2   </span></span>
 <span><span class="co">## [33] systemfonts_1.0.4 fs_1.5.2          textshaping_0.3.6 digest_0.6.29    </span></span>
 <span><span class="co">## [37] stringi_1.7.8     mathjaxr_1.6-0    rbibutils_2.2.9   rprojroot_2.0.3  </span></span>
 <span><span class="co">## [41] Rdpack_2.4        cli_3.4.1         tools_4.2.1       magrittr_2.0.3   </span></span>
-<span><span class="co">## [45] sass_0.4.2        tibble_3.1.8      pkgconfig_2.0.3   rmarkdown_2.16   </span></span>
+<span><span class="co">## [45] sass_0.4.2        tibble_3.1.8      pkgconfig_2.0.3   rmarkdown_2.17   </span></span>
 <span><span class="co">## [49] R6_2.5.1          nlme_3.1-157      compiler_4.2.1</span></span></code></pre>
 </details><div class="section level3">
 <h3 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
