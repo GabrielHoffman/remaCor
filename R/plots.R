@@ -69,8 +69,15 @@ plotForest = function( beta, stders){
 	df = data.frame(ID, beta, stders)
 	df$ID = factor(df$ID, rev(ID))
 
-	ggplot(df, aes(ID, beta)) + theme_bw(15) + geom_hline(yintercept=0, linetype="dashed", color="grey50", size=1.2) + ylab(bquote(beta)) + xlab("") + geom_errorbar(aes(ymin=beta-1.96*stders, ymax=beta+1.96*stders), width=.1) + geom_point(color="dodgerblue", size=3) + coord_flip() + theme(aspect.ratio=1)	
-	# grid.draw(cbind(ggplotGrob(fig1), ggplotGrob(fig2)))
+	ggplot(df, aes(ID, beta)) + 
+		theme_bw(15) + 
+		geom_hline(yintercept=0, linetype="dashed", color="grey50", size=1.2) + 
+		ylab(bquote(beta)) + 
+		xlab("") + 
+		geom_errorbar(aes(ymin=beta-1.96*stders, ymax=beta+1.96*stders), width=.1) + 
+		geom_point(color="dodgerblue", size=3) + 
+		coord_flip() + 
+		theme(aspect.ratio=1, plot.title = element_text(hjust = 0.5))
 }
 
 #' Correlation plot
@@ -117,7 +124,13 @@ plotCor = function( cor ){
 	df2$Var1 = factor(df2$Var1, ID)
 	df2$Var2 = factor(df2$Var2, rev(ID))
 
-	ggplot(df2, aes(Var1, Var2, fill=value)) + geom_tile() + scale_fill_gradient2(name = "Correlation", low="blue", mid="white", high="red", limits=c(-1, 1)) + xlab("") + ylab("") + theme_minimal() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), aspect.ratio=1, axis.text.x = element_text(angle = 90, hjust = 1)) 
+	ggplot(df2, aes(Var1, Var2, fill=value)) + 
+		geom_tile() + 
+		scale_fill_gradient2(name = "Correlation", low="blue", mid="white", high="red", limits=c(-1, 1)) +
+		xlab("") + 
+		ylab("") + 
+		theme_minimal() + 
+		theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), aspect.ratio=1, axis.text.x = element_text(angle = 90, hjust = 1), plot.title = element_text(hjust = 0.5)) 
 }
 
 
