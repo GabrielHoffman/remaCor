@@ -1,4 +1,8 @@
 
+# remaCor 0.0.12
+ - June 3, 2023
+ - Add `LS.empirical()` to handle fixed effects meta-analysis of regression coefficients estimated from finite sample.
+
 # remaCor 0.0.11
  - Oct 11, 2022
  - Handle errors when covariance matrix is not invertable
