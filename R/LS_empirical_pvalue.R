@@ -115,7 +115,9 @@ LS.empirical = function(beta, stders, cor = diag(1, length(beta)), nu = rep(Inf,
 
 	# Compute empirical p-value using a gamma fit to 
 	# Monte Carlo samples from the null distribution
-	.LS_empirical_pvalue(with(res, (beta/se)^2), V, nu, n.mc.samples )
+	res$p = .LS_empirical_pvalue(with(res, (beta/se)^2), V, nu, n.mc.samples )
+
+	res
 }
 
 
