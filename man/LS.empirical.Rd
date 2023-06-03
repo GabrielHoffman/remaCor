@@ -9,7 +9,8 @@ LS.empirical(
   stders,
   cor = diag(1, length(beta)),
   nu = rep(Inf, length(beta)),
-  n.mc.samples = 1e+05
+  n.mc.samples = 1e+05,
+  seed = 1
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ LS.empirical(
 \item{nu}{array of degrees of freedom values, one for each coefficient}
 
 \item{n.mc.samples}{number of Monte Carlo samples}
+
+\item{seed}{random seed so results are reproducable}
 }
 \description{
 Fixed effect meta-analysis for correlated test statistics using the Lin-Sullivan method using Monte Carlo draws from the null distribution to compute the p-value.
