@@ -56,7 +56,8 @@ get_stat_samples = function(V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1 
 # @param nu array of degrees of freedom values, one for each coefficient
 # @param n.mc.samples number of Monte Carlo samples
 #  
-#' @importFrom MASS fitdistr
+# @importFrom MASS fitdistr
+#' @importFrom EnvStats egamma
 .LS_empirical_pvalue = function(LS.stat, V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1){
 
 	stopifnot( nrow(V) == ncol(V) )
@@ -66,9 +67,17 @@ get_stat_samples = function(V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1 
 	# sample stats assuming finite sample size
 	stats = get_stat_samples(V, nu, n.mc.samples, seed)
 
-	fit.g = suppressWarnings(fitdistr(stats, "gamma"))
+	# # slower estimation of gamma paramters
+	# fit.g = suppressWarnings(fitdistr(stats, "gamma"))
+	# pgamma(LS.stat, shape = fit.g$estimate[1], rate=fit.g$estimate[2], lower.tail=FALSE)
 
-	pgamma(LS.stat, shape = fit.g$estimate[1], rate=fit.g$estimate[2], lower.tail=FALSE)
+	# estimate gamma parameters
+	fit.g = egamma(stats)
+
+	# compute p-value
+	pgamma(LS.stat, 
+		shape = fit.g$parameters[1], 
+		scale=fit.g$parameters[2], lower.tail=FALSE)
 }
 
 

@@ -23,7 +23,7 @@ Depends:
 Imports:
     mvtnorm,
     compiler,
-    MASS,
+    EnvStats,
     Rdpack,
     stats
 VignetteBuilder: knitr
