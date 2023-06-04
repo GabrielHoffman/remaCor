@@ -22,6 +22,7 @@ Depends:
     methods
 Imports:
     mvtnorm,
+    Rfast,
     compiler,
     EnvStats,
     Rdpack,

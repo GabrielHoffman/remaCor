@@ -2,7 +2,7 @@
 # June 2, 2023
 
 # Monte Carlo simulation of Lin-Sullivan statistics given covariance and degrees of freedom
-#' @importFrom mvtnorm rmvnorm
+#' @importFrom Rfast rmvnorm
 get_stat_samples = function(V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1 ){
 
 	# use specified seed internally, then reset to original value
@@ -14,7 +14,7 @@ get_stat_samples = function(V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1 
 
 	# Simulate beta from null distribution
 	# multivariate normal
-	beta_null = rmvnorm(n.mc.samples, rep(0, p), V)
+	beta_null = rmvnorm(n.mc.samples, rep(0, p), V, seed=seed)
 
 	# Simulate from Student t
 	# a ~ N(0, Sigma)
@@ -56,7 +56,6 @@ get_stat_samples = function(V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1 
 # @param nu array of degrees of freedom values, one for each coefficient
 # @param n.mc.samples number of Monte Carlo samples
 #  
-# @importFrom MASS fitdistr
 #' @importFrom EnvStats egamma
 .LS_empirical_pvalue = function(LS.stat, V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1){
 
@@ -66,10 +65,6 @@ get_stat_samples = function(V, nu = rep(Inf, nrow(V)), n.mc.samples=1e5, seed=1 
 
 	# sample stats assuming finite sample size
 	stats = get_stat_samples(V, nu, n.mc.samples, seed)
-
-	# # slower estimation of gamma paramters
-	# fit.g = suppressWarnings(fitdistr(stats, "gamma"))
-	# pgamma(LS.stat, shape = fit.g$estimate[1], rate=fit.g$estimate[2], lower.tail=FALSE)
 
 	# estimate gamma parameters
 	fit.g = egamma(stats)
