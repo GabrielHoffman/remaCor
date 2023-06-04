@@ -107,26 +107,26 @@
 <span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
 <span class="r-in"><span><span class="co"># assume identity correlation  </span></span></span>
 <span class="r-in"><span><span class="fu">LS</span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        beta   se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.1723821 0.05 0.0005655042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         beta   se          p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.6156819 0.05 7.6495e-35</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run random effects meta-analysis,</span></span></span>
 <span class="r-in"><span><span class="co"># assume identity correlation  </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1    stat2         RE2Cp RE2Cp.twoStep       QE           QEp      Isq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 11.88623 891.5523 1.857396e-197            NA 917.2928 1.570608e-198 99.67295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1    stat2         RE2Cp RE2Cp.twoStep       QE          QEp      Isq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 151.6257 442.0658 3.440468e-130            NA 465.0895 1.75279e-100 99.35496</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
 <span class="r-in"><span><span class="co"># account for correlation </span></span></span>
 <span class="r-in"><span><span class="fu">LS</span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        beta         se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.4129554 0.06037764 7.944713e-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         beta         se            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.7189074 0.03954235 7.340078e-74</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run random effects meta-analysis,</span></span></span>
 <span class="r-in"><span><span class="co"># account for correlation </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      stat1    stat2         RE2Cp RE2Cp.twoStep QE QEp Isq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 46.77933 787.2157 2.664297e-182            NA NA  NA  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 330.5376 419.9264 3.381569e-164            NA NA  NA  NA</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
