@@ -178,12 +178,12 @@ evaluted if correlation is diagonal</p>
 <span><span class="co">## H^2 (total variability / sampling variability):  0.00</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 1) = 0.0000, p-val = 0.9969</span></span>
+<span><span class="co">## Q(df = 1) = 0.0013, p-val = 0.9717</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## estimate      se    zval    pval    ci.lb   ci.ub    </span></span>
-<span><span class="co">##   0.2006  0.1383  1.4506  0.1469  -0.0704  0.4716    </span></span>
+<span><span class="co">##   0.1265  0.2012  0.6286  0.5296  -0.2679  0.5209    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
@@ -194,18 +194,18 @@ evaluted if correlation is diagonal</p>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Random-Effects Model (k = 2; tau^2 estimator: REML)</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0 (SE = 0.0645)</span></span>
+<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0 (SE = 0.1158)</span></span>
 <span><span class="co">## tau (square root of estimated tau^2 value):      0</span></span>
 <span><span class="co">## I^2 (total heterogeneity / total variability):   0.00%</span></span>
 <span><span class="co">## H^2 (total variability / sampling variability):  1.00</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 1) = 0.0000, p-val = 0.9969</span></span>
+<span><span class="co">## Q(df = 1) = 0.0013, p-val = 0.9717</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## estimate      se    zval    pval    ci.lb   ci.ub    </span></span>
-<span><span class="co">##   0.2006  0.1383  1.4506  0.1469  -0.0704  0.4716    </span></span>
+<span><span class="co">##   0.1265  0.2012  0.6286  0.5296  -0.2679  0.5209    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
@@ -213,26 +213,26 @@ evaluted if correlation is diagonal</p>
 <code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, assume identity correlation  </span></span>
 <span><span class="co"># Use Lin-Sullivan method</span></span>
 <span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##        beta        se         p</span></span>
-<span><span class="co">## 1 0.2005703 0.1382652 0.1468856</span></span></code></pre>
+<pre><code><span><span class="co">##        beta        se        p</span></span>
+<span><span class="co">## 1 0.1264933 0.2012268 0.529604</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, accounting for correlation  </span></span>
 <span><span class="co"># Use Lin-Sullivan method</span></span>
 <span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##        beta       se         p</span></span>
-<span><span class="co">## 1 0.2005579 0.141632 0.1567612</span></span></code></pre>
+<pre><code><span><span class="co">##        beta        se         p</span></span>
+<span><span class="co">## 1 0.1262769 0.1557005 0.4173515</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, assume identity correlation  </span></span>
 <span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    stat1 stat2     RE2Cp RE2Cp.twoStep           QE       QEp Isq</span></span>
-<span><span class="co">## 1 2.1043     0 0.1786468            NA 1.523578e-05 0.9968856   0</span></span></code></pre>
+<pre><code><span><span class="co">##       stat1 stat2     RE2Cp RE2Cp.twoStep         QE       QEp Isq</span></span>
+<span><span class="co">## 1 0.3951513     0 0.5753089            NA 0.00125823 0.9717037   0</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, accounting for correlation </span></span>
 <span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##      stat1 stat2    RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 2.005194     0 0.192079            NA NA  NA  NA</span></span></code></pre>
-<pre><code><span><span class="co">##      stat1 stat2    RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 2.005194     0 0.192079            NA NA  NA  NA</span></span></code></pre>
+<pre><code><span><span class="co">##      stat1 stat2     RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
+<span><span class="co">## 1 0.657761     0 0.4708306            NA NA  NA  NA</span></span></code></pre>
+<pre><code><span><span class="co">##      stat1 stat2     RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
+<span><span class="co">## 1 0.657761     0 0.4708306            NA NA  NA  NA</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
