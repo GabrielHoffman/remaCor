@@ -44,9 +44,11 @@ get_sample = function(C_chol, nu){
 
 get_stat_samples3 = function(V, nu, n.mc.samples, seed){
 
-	old <- .Random.seed
-    on.exit({.Random.seed <<- old})
-    set.seed(seed)
+	if( exists(".Random.seed") ){
+		old <- .Random.seed
+	  on.exit({.Random.seed <<- old})
+	}
+  set.seed(seed)
 
 	ch = chol(V)
 	sapply(seq(n.mc.samples), function(i) get_sample(ch, nu))
