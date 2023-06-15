@@ -1,8 +1,8 @@
 Type: Package
 Package: remaCor
 Title: Random Effects Meta-Analysis for Correlated Test Statistics
-Version: 0.0.12
-Date: 2023-6-2
+Version: 0.0.14
+Date: 2023-6-15
 Authors@R: 
     person("Gabriel", "Hoffman", , "gabriel.hoffman@mssm.edu", role = c("aut", "cre"))
 Description: Meta-analysis is widely used to summarize estimated effects sizes across multiple statistical tests. Standard fixed and random effect meta-analysis methods assume that the estimated of the effect sizes are statistically independent.  Here we relax this assumption and enable meta-analysis when the correlation matrix between effect size estimates is known.  Fixed effect meta-analysis uses the method of Lin and Sullivan (2009) <doi:10.1016/j.ajhg.2009.11.001>, and random effects meta-analysis uses the method of Han, et al. <doi:10.1093/hmg/ddw049>.
@@ -11,19 +11,19 @@ URL: https://diseaseneurogenomics.github.io/remaCor/
 BugReports: https://github.com/DiseaseNeurogenomics/remaCor/issues
 Suggests:
     knitr,
+    RUnit,
+    clusterGeneration,
     metafor
 Depends:
     R (>= 3.6.0),
-    RUnit,
-    clusterGeneration,
     ggplot2,
-    grid,
-    reshape2,
     methods
 Imports:
     mvtnorm,
-    Rfast,
+    grid,
+    reshape2,
     compiler,
+    Rcpp,
     EnvStats,
     Rdpack,
     stats
@@ -31,3 +31,4 @@ VignetteBuilder: knitr
 RdMacros: Rdpack
 Encoding: UTF-8
 RoxygenNote: 7.2.3
+LinkingTo: Rcpp, RcppArmadillo

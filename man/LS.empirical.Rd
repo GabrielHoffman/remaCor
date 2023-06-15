@@ -8,8 +8,8 @@ LS.empirical(
   beta,
   stders,
   cor = diag(1, length(beta)),
-  nu = rep(Inf, length(beta)),
-  n.mc.samples = 1e+05,
+  nu,
+  n.mc.samples = 10000,
   seed = 1
 )
 }
@@ -20,7 +20,7 @@ LS.empirical(
 
 \item{cor}{correlation matrix between of test statistics.  Default considers uncorrelated test statistics}
 
-\item{nu}{array of degrees of freedom values, one for each coefficient}
+\item{nu}{}
 
 \item{n.mc.samples}{number of Monte Carlo samples}
 
@@ -30,33 +30,49 @@ LS.empirical(
 Fixed effect meta-analysis for correlated test statistics using the Lin-Sullivan method using Monte Carlo draws from the null distribution to compute the p-value.
 }
 \details{
-The theorical null for the Lin-Sullivan statistic for fixed effects meta-analysis is chisq when the regression coefficients being tested are normally distributed. This works  asymptotically when the regression coefficients are estimated from a sufficiently large sample.  But when the coefficients are estimated from a small sample, they have a Student-t null distrubtion that is not well approximated by a normal.  In this case, no cumulative distribution function exists in closed form.  Here we simulate coefficients from the student-t under the null given the covariance and degrees of freedom, compute the Lin-Sullivan statistic and then fit a gamma distribution to these null samples.  The p-value for the observed Lin-Sullivan statistic is then computed using this gamma approximation.
+The theorical null for the Lin-Sullivan statistic for fixed effects meta-analysis is chisq when the regression coefficients are estimated from a large sample size. But for finite sample size, this null distribution is not well characterized. In this case, we are not aware of a closed from cumulative distribution function.  Instead we draw covariance matrices from a Wishart distribution, sample coefficients from a multivariate normal with this covariance, and then compute the Lin-Sullivan statistic.  A gamma distribution is then fit to these  draws from the null distribution and a p-value is computed from the cumulative distribution function of this gamma.
 }
 \examples{
 library(clusterGeneration)
 library(mvtnorm)
 
-p = 6
-C = cov2cor(genPositiveDefMat(p)$Sigma)
-stders = rep(2, p)
-V <- diag(stders) \%*\% C \%*\% diag(stders)
-beta = t(rmvnorm(1, rep(5, p), V))
+# sample size
+n = 30
 
-# Run fixed effects meta-analysis, 
-# and get theoretical p-value  
-res = LS( beta, stders, C)
-res
+# number of response variables
+m = 6
 
-# Get p-value from gamma fit to Monte Carlo samples 
-# from null distrubtion
-# This matches the theoretical p-value when betas 
-# are drawn from a normal distribution
-LS.empirical(beta, stders, C)
+# Error covariance
+Sigma = genPositiveDefMat(m)$Sigma
 
-# Compute empirical p-value assuming 
-# varying and finite degrees of freedom
-nu = seq(5, p+4)
-LS.empirical(beta, stders, C, nu)
+# regression parameters
+beta = matrix(.6, 1, m)
+
+# covariates
+X = matrix(rnorm(n), ncol=1)
+
+# Simulate response variables
+Y = X \%*\% beta + rmvnorm(n, sigma = Sigma)
+
+# Multivariate regression
+fit = lm(Y ~ X)
+
+# Correlation between residuals
+C = cor(residuals(fit))
+
+# Extract effect sizes and standard errors from model fit
+df = lapply(coef(summary(fit)), function(a) 
+	data.frame(beta = a["X", 1], se = a["X", 2]))
+df = do.call(rbind, df)
+
+# Meta-analysis assuming infinite sample size
+# but the p-value is anti-conservative
+LS(df$beta, df$se, C)
+
+# Meta-analysis explicitly modeling the finite sample size
+# Gives properly calibrated p-values
+# nu is the residual degrees of freedom from the model fit
+LS.empirical(df$beta, df$se, C, nu=n-2)
 }
 \seealso{
 \code{LS()}

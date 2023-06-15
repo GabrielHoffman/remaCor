@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">remaCor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.14</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,8 +58,8 @@
 <span>  <span class="va">beta</span>,</span>
 <span>  <span class="va">stders</span>,</span>
 <span>  cor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  nu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">beta</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  n.mc.samples <span class="op">=</span> <span class="fl">1e+05</span>,</span>
+<span>  <span class="va">nu</span>,</span>
+<span>  n.mc.samples <span class="op">=</span> <span class="fl">10000</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -79,7 +79,7 @@
 
 
 <dt>nu</dt>
-<dd><p>array of degrees of freedom values, one for each coefficient</p></dd>
+<dd></dd>
 
 
 <dt>n.mc.samples</dt>
@@ -92,7 +92,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The theorical null for the Lin-Sullivan statistic for fixed effects meta-analysis is chisq when the regression coefficients being tested are normally distributed. This works  asymptotically when the regression coefficients are estimated from a sufficiently large sample.  But when the coefficients are estimated from a small sample, they have a Student-t null distrubtion that is not well approximated by a normal.  In this case, no cumulative distribution function exists in closed form.  Here we simulate coefficients from the student-t under the null given the covariance and degrees of freedom, compute the Lin-Sullivan statistic and then fit a gamma distribution to these null samples.  The p-value for the observed Lin-Sullivan statistic is then computed using this gamma approximation.</p>
+    <p>The theorical null for the Lin-Sullivan statistic for fixed effects meta-analysis is chisq when the regression coefficients are estimated from a large sample size. But for finite sample size, this null distribution is not well characterized. In this case, we are not aware of a closed from cumulative distribution function.  Instead we draw covariance matrices from a Wishart distribution, sample coefficients from a multivariate normal with this covariance, and then compute the Lin-Sullivan statistic.  A gamma distribution is then fit to these  draws from the null distribution and a p-value is computed from the cumulative distribution function of this gamma.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -104,33 +104,47 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">clusterGeneration</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://mvtnorm.R-forge.R-project.org" class="external-link">mvtnorm</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">=</span> <span class="fl">6</span></span></span>
-<span class="r-in"><span><span class="va">C</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/clusterGeneration/man/genPositiveDefMat.html" class="external-link">genPositiveDefMat</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">$</span><span class="va">Sigma</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">stders</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">stders</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">C</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">stders</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">beta</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html" class="external-link">rmvnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">5</span>, <span class="va">p</span><span class="op">)</span>, <span class="va">V</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># sample size</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">=</span> <span class="fl">30</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
-<span class="r-in"><span><span class="co"># and get theoretical p-value  </span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="LS.html">LS</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">C</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       beta        se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 5.091065 0.6440681 2.689152e-15</span>
+<span class="r-in"><span><span class="co"># number of response variables</span></span></span>
+<span class="r-in"><span><span class="va">m</span> <span class="op">=</span> <span class="fl">6</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Get p-value from gamma fit to Monte Carlo samples </span></span></span>
-<span class="r-in"><span><span class="co"># from null distrubtion</span></span></span>
-<span class="r-in"><span><span class="co"># This matches the theoretical p-value when betas </span></span></span>
-<span class="r-in"><span><span class="co"># are drawn from a normal distribution</span></span></span>
-<span class="r-in"><span><span class="fu">LS.empirical</span><span class="op">(</span><span class="va">beta</span>, <span class="va">stders</span>, <span class="va">C</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       beta        se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 5.091065 0.6440681 2.424114e-15</span>
+<span class="r-in"><span><span class="co"># Error covariance</span></span></span>
+<span class="r-in"><span><span class="va">Sigma</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterGeneration/man/genPositiveDefMat.html" class="external-link">genPositiveDefMat</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">Sigma</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Compute empirical p-value assuming </span></span></span>
-<span class="r-in"><span><span class="co"># varying and finite degrees of freedom</span></span></span>
-<span class="r-in"><span><span class="va">nu</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="va">p</span><span class="op">+</span><span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">LS.empirical</span><span class="op">(</span><span class="va">beta</span>, <span class="va">stders</span>, <span class="va">C</span>, <span class="va">nu</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       beta        se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 5.091065 0.6440681 4.934012e-10</span>
+<span class="r-in"><span><span class="co"># regression parameters</span></span></span>
+<span class="r-in"><span><span class="va">beta</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">.6</span>, <span class="fl">1</span>, <span class="va">m</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># covariates</span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Simulate response variables</span></span></span>
+<span class="r-in"><span><span class="va">Y</span> <span class="op">=</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html" class="external-link">rmvnorm</a></span><span class="op">(</span><span class="va">n</span>, sigma <span class="op">=</span> <span class="va">Sigma</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Multivariate regression</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Correlation between residuals</span></span></span>
+<span class="r-in"><span><span class="va">C</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Extract effect sizes and standard errors from model fit</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="va">a</span><span class="op">[</span><span class="st">"X"</span>, <span class="fl">1</span><span class="op">]</span>, se <span class="op">=</span> <span class="va">a</span><span class="op">[</span><span class="st">"X"</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Meta-analysis assuming infinite sample size</span></span></span>
+<span class="r-in"><span><span class="co"># but the p-value is anti-conservative</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="LS.html">LS</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        beta        se            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.8415067 0.2204042 0.0001345297</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Meta-analysis explicitly modeling the finite sample size</span></span></span>
+<span class="r-in"><span><span class="co"># Gives properly calibrated p-values</span></span></span>
+<span class="r-in"><span><span class="co"># nu is the residual degrees of freedom from the model fit</span></span></span>
+<span class="r-in"><span><span class="fu">LS.empirical</span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span>, nu<span class="op">=</span><span class="va">n</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        beta        se           p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.8415067 0.2204042 0.003190516</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

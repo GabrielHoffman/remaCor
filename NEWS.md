@@ -1,4 +1,9 @@
 
+# remaCor 0.0.14
+ - June 15, 2023
+ - Fix null distribution used in `LS.empirical()`
+ - add `hotelling()` test
+
 # remaCor 0.0.12
  - June 3, 2023
  - Add `LS.empirical()` to handle fixed effects meta-analysis of regression coefficients estimated from finite sample.

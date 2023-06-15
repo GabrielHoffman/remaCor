@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">remaCor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.14</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,81 +142,103 @@ evaluted if correlation is diagonal</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://diseaseneurogenomics.github.io/remaCor/" class="external-link">remaCor</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.metafor-project.org" class="external-link">metafor</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Generate effects</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://mvtnorm.R-forge.R-project.org" class="external-link">mvtnorm</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">clusterGeneration</span> <span class="op">)</span></span>
 <span></span>
-<span><span class="va">n</span> <span class="op">=</span> <span class="fl">4</span></span>
-<span><span class="va">Sigma</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/clusterGeneration/man/genPositiveDefMat.html" class="external-link">genPositiveDefMat</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">$</span><span class="va">Sigma</span><span class="op">)</span></span>
-<span><span class="va">beta</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html" class="external-link">rmvnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">n</span><span class="op">)</span>, <span class="va">Sigma</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">stders</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="va">n</span><span class="op">)</span></span>
+<span><span class="co"># sample size</span></span>
+<span><span class="va">n</span> <span class="op">=</span> <span class="fl">30</span></span>
+<span></span>
+<span><span class="co"># number of response variables</span></span>
+<span><span class="va">m</span> <span class="op">=</span> <span class="fl">2</span></span>
+<span></span>
+<span><span class="co"># Error covariance</span></span>
+<span><span class="va">Sigma</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterGeneration/man/genPositiveDefMat.html" class="external-link">genPositiveDefMat</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">Sigma</span></span>
+<span></span>
+<span><span class="co"># regression parameters</span></span>
+<span><span class="va">beta</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="va">m</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># covariates</span></span>
+<span><span class="va">X</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Simulate response variables</span></span>
+<span><span class="va">Y</span> <span class="op">=</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">beta</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/mvtnorm/man/Mvnorm.html" class="external-link">rmvnorm</a></span><span class="op">(</span><span class="va">n</span>, sigma <span class="op">=</span> <span class="va">Sigma</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Multivariate regression</span></span>
+<span><span class="va">fit</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">X</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Correlation between residuals</span></span>
+<span><span class="va">C</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Extract effect sizes and standard errors from model fit</span></span>
+<span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>beta <span class="op">=</span> <span class="va">a</span><span class="op">[</span><span class="st">"X"</span>, <span class="fl">1</span><span class="op">]</span>, se <span class="op">=</span> <span class="va">a</span><span class="op">[</span><span class="st">"X"</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">df</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Standard fixed effects meta-analysis</span></span>
 <span><span class="co"># of independent effects with metafor pacakge</span></span>
-<span><span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span> <span class="va">beta</span>, sei<span class="op">=</span><span class="va">stders</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, sei<span class="op">=</span><span class="va">df</span><span class="op">$</span><span class="va">se</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Fixed-Effects Model (k = 4)</span></span>
+<span><span class="co">## Fixed-Effects Model (k = 2)</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## I^2 (total heterogeneity / total variability):   97.81%</span></span>
-<span><span class="co">## H^2 (total variability / sampling variability):  45.71</span></span>
+<span><span class="co">## I^2 (total heterogeneity / total variability):   0.00%</span></span>
+<span><span class="co">## H^2 (total variability / sampling variability):  0.05</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 3) = 137.1369, p-val &lt; .0001</span></span>
+<span><span class="co">## Q(df = 1) = 0.0543, p-val = 0.8157</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## estimate      se     zval    pval    ci.lb    ci.ub     </span></span>
-<span><span class="co">##  -0.1499  0.0500  -2.9981  0.0027  -0.2479  -0.0519  ** </span></span>
+<span><span class="co">## estimate      se     zval    pval    ci.lb    ci.ub    </span></span>
+<span><span class="co">##  -0.6313  0.2609  -2.4194  0.0155  -1.1427  -0.1199  * </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standard random effects meta-analysis</span></span>
 <span><span class="co"># of independent effects with metafor pacakge</span></span>
-<span><span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span> <span class="va">beta</span>, sei<span class="op">=</span><span class="va">stders</span>, method<span class="op">=</span><span class="st">"REML"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, sei<span class="op">=</span><span class="va">df</span><span class="op">$</span><span class="va">se</span>, method<span class="op">=</span><span class="st">"REML"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Random-Effects Model (k = 4; tau^2 estimator: REML)</span></span>
+<span><span class="co">## Random-Effects Model (k = 2; tau^2 estimator: REML)</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0.4471 (SE = 0.3732)</span></span>
-<span><span class="co">## tau (square root of estimated tau^2 value):      0.6687</span></span>
-<span><span class="co">## I^2 (total heterogeneity / total variability):   97.81%</span></span>
-<span><span class="co">## H^2 (total variability / sampling variability):  45.71</span></span>
+<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0 (SE = 0.2142)</span></span>
+<span><span class="co">## tau (square root of estimated tau^2 value):      0</span></span>
+<span><span class="co">## I^2 (total heterogeneity / total variability):   0.00%</span></span>
+<span><span class="co">## H^2 (total variability / sampling variability):  1.00</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 3) = 137.1369, p-val &lt; .0001</span></span>
+<span><span class="co">## Q(df = 1) = 0.0543, p-val = 0.8157</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## estimate      se     zval    pval    ci.lb   ci.ub    </span></span>
-<span><span class="co">##  -0.1499  0.3381  -0.4434  0.6575  -0.8125  0.5127    </span></span>
+<span><span class="co">## estimate      se     zval    pval    ci.lb    ci.ub    </span></span>
+<span><span class="co">##  -0.6313  0.2609  -2.4194  0.0155  -1.1427  -0.1199  * </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, assume identity correlation  </span></span>
 <span><span class="co"># Use Lin-Sullivan method</span></span>
-<span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##         beta   se           p</span></span>
-<span><span class="co">## 1 -0.1499028 0.05 0.002717079</span></span></code></pre>
+<span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##         beta        se          p</span></span>
+<span><span class="co">## 1 -0.6313057 0.2609343 0.01554595</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, accounting for correlation  </span></span>
 <span><span class="co"># Use Lin-Sullivan method</span></span>
-<span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##         beta         se          p</span></span>
-<span><span class="co">## 1 -0.1247092 0.05674812 0.02797825</span></span></code></pre>
+<span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##         beta        se          p</span></span>
+<span><span class="co">## 1 -0.6171287 0.3063158 0.04393807</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, assume identity correlation  </span></span>
-<span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##      stat1    stat2        RE2Cp RE2Cp.twoStep       QE          QEp     Isq</span></span>
-<span><span class="co">## 1 8.988339 118.9981 5.049463e-29            NA 137.1369 1.565859e-29 97.8124</span></span></code></pre>
+<span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      stat1 stat2      RE2Cp RE2Cp.twoStep         QE       QEp Isq</span></span>
+<span><span class="co">## 1 5.853517     0 0.02151579            NA 0.05434955 0.8156605   0</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, accounting for correlation </span></span>
-<span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##      stat1    stat2        RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 4.829407 137.5472 4.149375e-32            NA NA  NA  NA</span></span></code></pre>
-<pre><code><span><span class="co">##      stat1    stat2        RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 4.829407 137.5472 4.149375e-32            NA NA  NA  NA</span></span></code></pre>
+<span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##     stat1 stat2      RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
+<span><span class="co">## 1 4.05894     0 0.06465885            NA NA  NA  NA</span></span></code></pre>
+<pre><code><span><span class="co">##     stat1 stat2      RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
+<span><span class="co">## 1 4.05894     0 0.06465885            NA NA  NA  NA</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
@@ -229,7 +251,7 @@ evaluted if correlation is diagonal</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /Users/gabrielhoffman/prog/R-4.3.0/lib/libRblas.dylib </span></span>
-<span><span class="co">## LAPACK: /usr/local/Cellar/r/4.2.3/lib/R/lib/libRlapack.dylib;  LAPACK version 3.10.1</span></span>
+<span><span class="co">## LAPACK: /usr/local/Cellar/r/4.3.0_1/lib/R/lib/libRlapack.dylib;  LAPACK version 3.11.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
@@ -238,30 +260,29 @@ evaluted if correlation is diagonal</p>
 <span><span class="co">## tzcode source: internal</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
-<span><span class="co">## [1] grid      stats     graphics  grDevices utils     datasets  methods  </span></span>
-<span><span class="co">## [8] base     </span></span>
+<span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] mvtnorm_1.1-3           metafor_4.2-0           numDeriv_2016.8-1.1    </span></span>
-<span><span class="co">##  [4] metadat_1.2-0           Matrix_1.5-4.1          remaCor_0.0.12         </span></span>
-<span><span class="co">##  [7] reshape2_1.4.4          ggplot2_3.4.2           clusterGeneration_1.3.7</span></span>
-<span><span class="co">## [10] MASS_7.3-60             RUnit_0.4.32           </span></span>
+<span><span class="co">## [1] clusterGeneration_1.3.7 MASS_7.3-60             mvtnorm_1.2-1          </span></span>
+<span><span class="co">## [4] metafor_4.2-0           numDeriv_2016.8-1.1     metadat_1.2-0          </span></span>
+<span><span class="co">## [7] Matrix_1.5-4.1          remaCor_0.0.14          ggplot2_3.4.2          </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] sass_0.4.6        utf8_1.2.3        generics_0.1.3    lattice_0.21-8   </span></span>
-<span><span class="co">##  [5] stringi_1.7.12    digest_0.6.31     magrittr_2.0.3    evaluate_0.21    </span></span>
-<span><span class="co">##  [9] fastmap_1.1.1     rprojroot_2.0.3   plyr_1.8.8        jsonlite_1.8.4   </span></span>
-<span><span class="co">## [13] purrr_1.0.1       fansi_1.0.4       scales_1.2.1      codetools_0.2-19 </span></span>
-<span><span class="co">## [17] textshaping_0.3.6 jquerylib_0.1.4   Rdpack_2.4        cli_3.6.1        </span></span>
-<span><span class="co">## [21] rlang_1.1.1       rbibutils_2.2.13  munsell_0.5.0     withr_2.5.0      </span></span>
-<span><span class="co">## [25] cachem_1.0.8      yaml_2.3.7        tools_4.3.0       memoise_2.0.1    </span></span>
-<span><span class="co">## [29] dplyr_1.1.2       colorspace_2.1-0  mathjaxr_1.6-0    vctrs_0.6.2      </span></span>
-<span><span class="co">## [33] R6_2.5.1          lifecycle_1.0.3   stringr_1.5.0     fs_1.6.2         </span></span>
-<span><span class="co">## [37] ragg_1.2.5        pkgconfig_2.0.3   desc_1.4.2        pkgdown_2.0.7    </span></span>
-<span><span class="co">## [41] bslib_0.4.2       pillar_1.9.0      gtable_0.3.3      glue_1.6.2       </span></span>
-<span><span class="co">## [45] Rcpp_1.0.10       systemfonts_1.0.4 xfun_0.39         tibble_3.2.1     </span></span>
-<span><span class="co">## [49] tidyselect_1.2.0  knitr_1.43        nlme_3.1-162      htmltools_0.5.5  </span></span>
-<span><span class="co">## [53] rmarkdown_2.21    compiler_4.3.0</span></span></code></pre>
+<span><span class="co">##  [1] sass_0.4.6        utf8_1.2.3        generics_0.1.3    EnvStats_2.7.0   </span></span>
+<span><span class="co">##  [5] lattice_0.21-8    stringi_1.7.12    digest_0.6.31     magrittr_2.0.3   </span></span>
+<span><span class="co">##  [9] evaluate_0.21     grid_4.3.0        fastmap_1.1.1     rprojroot_2.0.3  </span></span>
+<span><span class="co">## [13] plyr_1.8.8        jsonlite_1.8.5    purrr_1.0.1       fansi_1.0.4      </span></span>
+<span><span class="co">## [17] scales_1.2.1      codetools_0.2-19  textshaping_0.3.6 jquerylib_0.1.4  </span></span>
+<span><span class="co">## [21] Rdpack_2.4        cli_3.6.1         rlang_1.1.1       rbibutils_2.2.13 </span></span>
+<span><span class="co">## [25] munsell_0.5.0     withr_2.5.0       cachem_1.0.8      yaml_2.3.7       </span></span>
+<span><span class="co">## [29] tools_4.3.0       reshape2_1.4.4    memoise_2.0.1     dplyr_1.1.2      </span></span>
+<span><span class="co">## [33] colorspace_2.1-0  mathjaxr_1.6-0    vctrs_0.6.2       R6_2.5.1         </span></span>
+<span><span class="co">## [37] lifecycle_1.0.3   stringr_1.5.0     fs_1.6.2          ragg_1.2.5       </span></span>
+<span><span class="co">## [41] pkgconfig_2.0.3   desc_1.4.2        pkgdown_2.0.7     pillar_1.9.0     </span></span>
+<span><span class="co">## [45] bslib_0.4.2       gtable_0.3.3      glue_1.6.2        Rcpp_1.0.10      </span></span>
+<span><span class="co">## [49] systemfonts_1.0.4 xfun_0.39         tibble_3.2.1      tidyselect_1.2.0 </span></span>
+<span><span class="co">## [53] knitr_1.43        nlme_3.1-162      htmltools_0.5.5   rmarkdown_2.22   </span></span>
+<span><span class="co">## [57] compiler_4.3.0</span></span></code></pre>
 </details><div class="section level3">
 <h3 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>

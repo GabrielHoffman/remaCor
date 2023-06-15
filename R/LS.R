@@ -29,31 +29,45 @@
 #'}
 #'
 #' @examples
-#' # Generate effects
+#' library(clusterGeneration)
 #' library(mvtnorm)
-#' library(clusterGeneration )
 #' 
-#' n = 4
-#' Sigma = cov2cor(genPositiveDefMat(n)$Sigma)
-#' beta = t(rmvnorm(1, rep(0, n), Sigma))
-#' stders = rep(.1, n)
+#' # sample size
+#' n = 30
+#' 
+#' # number of response variables
+#' m = 6
+#' 
+#' # Error covariance
+#' Sigma = genPositiveDefMat(m)$Sigma
+#' 
+#' # regression parameters
+#' beta = matrix(.6, 1, m)
+#' 
+#' # covariates
+#' X = matrix(rnorm(n), ncol=1)
+#' 
+#' # Simulate response variables
+#' Y = X %*% beta + rmvnorm(n, sigma = Sigma)
+#' 
+#' # Multivariate regression
+#' fit = lm(Y ~ X)
+#' 
+#' # Correlation between residuals
+#' C = cor(residuals(fit))
+#' 
+#' # Extract effect sizes and standard errors from model fit
+#' df = lapply(coef(summary(fit)), function(a) 
+#'  data.frame(beta = a["X", 1], se = a["X", 2]))
+#' df = do.call(rbind, df)
 #' 
 #' # Run fixed effects meta-analysis, 
 #' # assume identity correlation  
-#' LS( beta, stders)
-#' 
-#' # Run random effects meta-analysis,
-#' # assume identity correlation  
-#' RE2C( beta, stders)
-#' 
+#' LS( df$beta, df$se)
+#'  
 #' # Run fixed effects meta-analysis, 
 #' # account for correlation 
-#' LS( beta, stders, Sigma)
-#' 
-#' # Run random effects meta-analysis,
-#' # account for correlation 
-#' RE2C( beta, stders, Sigma)
-#'
+#' LS( df$beta, df$se, C)
 #' @import stats
 #' @export
 LS <- function(beta, stders, cor=diag(1, length(beta)) ){
