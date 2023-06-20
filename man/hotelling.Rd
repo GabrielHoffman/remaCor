@@ -18,6 +18,9 @@ hotelling(beta, Sigma, n, mu_null = rep(0, length(beta)))
 \description{
 Hottelling T^2 test compares estimated regression coefficients to specified values under the null.  This tests a global hypothesis for all specified coefficients.  It uses the F-distribution as the null for the test statistic which is exact under finite sample size.
 }
+\details{
+The Hotelling T2 test is not defined when n - p < 1.  Returns \code{data.frame} with \code{stat = pvalue = NA}.
+}
 \examples{
 library(clusterGeneration)
 library(mvtnorm)

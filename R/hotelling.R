@@ -10,6 +10,8 @@
 #' @param n sample size used for estimation
 #' @param mu_null the values of the regression coefficients under the null hypothesis.  Defaults to all zeros
 #' 
+#' @details The Hotelling T2 test is not defined when n - p < 1.  Returns \code{data.frame} with \code{stat = pvalue = NA}.
+
 #' @examples
 #' library(clusterGeneration)
 #' library(mvtnorm)
@@ -52,14 +54,19 @@ hotelling = function(beta, Sigma, n, mu_null = rep(0, length(beta))){
 
 	p = length(beta)
 
-	# Hotelling T^2 statistic
-	tsq = crossprod(beta - mu_null, solve(Sigma, beta - mu_null))
+	if( n - p < 1){
+		stat = pvalue = NA
+		warning("Hotelling test not defined when n - p < 1")
+	}else{
+		# Hotelling T^2 statistic
+		tsq = crossprod(beta - mu_null, solve(Sigma, beta - mu_null))
 
-	# compute test statistic
-	stat = (n-p) / (p*(n-1)) * tsq
+		# compute test statistic
+		stat = (n-p) / (p*(n-1)) * tsq[1]
 
-	# Compare test statistic to finite-sample null
-	pvalue = pf(stat, p, n-p, lower.tail=FALSE)
+		# Compare test statistic to finite-sample null
+		pvalue = pf(stat, p, n-p, lower.tail=FALSE)
+	}
 
 	data.frame(n = n, 
 				p = p,

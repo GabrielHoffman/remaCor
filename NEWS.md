@@ -1,3 +1,6 @@
+# remaCor 0.0.15
+ - June 17, 2023
+ - in `hotelling()` check that `n-p >= 1` 
 
 # remaCor 0.0.14
  - June 15, 2023
