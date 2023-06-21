@@ -1,3 +1,7 @@
+# remaCor 0.0.16
+ - June 21, 2023
+ - Pass CRAN checks on Windows
+
 # remaCor 0.0.15
  - June 17, 2023
  - in `hotelling()` check that `n-p >= 1` 
