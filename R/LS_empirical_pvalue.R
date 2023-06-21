@@ -89,7 +89,7 @@ get_stat_samples3 = function(V, nu, n.mc.samples, seed){
 #' @param beta regression coefficients from each analysis
 #' @param stders standard errors corresponding to betas
 #' @param cor correlation matrix between of test statistics.  Default considers uncorrelated test statistics 
-#' @param nu 
+#' @param nu degrees of freedom
 #' @param n.mc.samples number of Monte Carlo samples
 #' @param seed random seed so results are reproducable
 #' 

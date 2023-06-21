@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 rwishart_chol <- function(df, S_chol) {
-    .Call('_remaCor_rwishart_chol', PACKAGE = 'remaCor', df, S_chol)
+    .Call(`_remaCor_rwishart_chol`, df, S_chol)
 }
 

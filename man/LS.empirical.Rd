@@ -20,7 +20,7 @@ LS.empirical(
 
 \item{cor}{correlation matrix between of test statistics.  Default considers uncorrelated test statistics}
 
-\item{nu}{}
+\item{nu}{degrees of freedom}
 
 \item{n.mc.samples}{number of Monte Carlo samples}
 
