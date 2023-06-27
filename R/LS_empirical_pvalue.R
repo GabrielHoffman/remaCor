@@ -34,11 +34,16 @@ get_sample = function(C_chol, nu){
 	ones = matrix(1,1,length(beta_i))
 	V_i = crossprod(V_i_chol)
 
+	# if matrix is not invertable, return NA for statistic
+	if( kappa(V_i) > 1e7 ){
+		return(NA)
+	}
+
 	a = solve(V_i, beta_i)
 	b = solve(V_i, t(ones))
 
 	newx <- (ones %*% a)/(ones %*% b)
-    newv <- 1/(ones %*% b)
+	newv <- 1/(ones %*% b)
 	(newx / sqrt(newv))^2
 }
 
@@ -48,7 +53,7 @@ get_stat_samples3 = function(V, nu, n.mc.samples, seed){
 		old <- .Random.seed
 	  on.exit({.Random.seed <<- old})
 	}
-  set.seed(seed)
+	set.seed(seed)
 
 	ch = chol(V)
 	sapply(seq(n.mc.samples), function(i) get_sample(ch, nu))
@@ -71,6 +76,7 @@ get_stat_samples3 = function(V, nu, n.mc.samples, seed){
 
 	# sample stats assuming finite sample size
 	stats = get_stat_samples3(V, nu, n.mc.samples, seed)
+	stats = stats[!is.na(stats)]
 
 	# estimate gamma parameters
 	fit.g = egamma(stats)
