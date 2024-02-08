@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">remaCor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.17</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.18</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,14 +79,29 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Return values:</p><ul><li><p><code>stat1</code>: statistic testing effect mean</p></li>
-<li><p><code>stat2</code>: statistic testing effect heterogeneity</p></li>
-<li><p><code>RE2Cp</code>: RE2 p-value accounting for correlelation between tests</p></li>
-<li><p><code>RE2Cp.twoStep</code>: two step RE2C test after fixed effect test.  Only evaluated if twoStep==TRUE</p></li>
-<li><p><code>QE</code>: test statistic for the test of (residual) heterogeneity</p></li>
-<li><p><code>QEp</code>: p-value for the test of (residual) heterogeneity</p></li>
-<li><p><code>Isq</code>: I^2 statistic</p></li>
-</ul><p><code>QE</code>, <code>QEp</code> and <code>ISq</code> are only evaluted if correlation is diagonal</p>
+<dl><dt>stat1:</dt>
+<dd><p>statistic testing effect mean</p></dd>
+
+<dt>stat2:</dt>
+<dd><p>statistic testing effect heterogeneity</p></dd>
+
+<dt>RE2Cp:</dt>
+<dd><p>RE2 p-value accounting for correlelation between tests</p></dd>
+
+<dt>RE2Cp.twoStep:</dt>
+<dd><p>two step RE2C test after fixed effect test.  Only evaluated if <code>twoStep==TRUE</code></p></dd>
+
+<dt>QE:</dt>
+<dd><p>test statistic for the test of (residual) heterogeneity</p></dd>
+
+<dt>QEp:</dt>
+<dd><p>p-value for the test of (residual) heterogeneity</p></dd>
+
+<dt>Isq:</dt>
+<dd><p>I^2 statistic</p></dd>
+
+
+</dl><p><code>QE</code>, <code>QEp</code> and <code>ISq</code> are only evaluted if correlation is diagonal</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
