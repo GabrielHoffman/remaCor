@@ -8,8 +8,8 @@
 <meta name="description" content="remaCor">
 <title>Random effects meta-analysis for correlated test statistics • remaCor</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Random effects meta-analysis for correlated test statistics">
 <meta property="og:description" content="remaCor">
@@ -175,15 +175,15 @@ evaluted if correlation is diagonal</p>
 <span><span class="co">## Fixed-Effects Model (k = 2)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## I^2 (total heterogeneity / total variability):   0.00%</span></span>
-<span><span class="co">## H^2 (total variability / sampling variability):  0.08</span></span>
+<span><span class="co">## H^2 (total variability / sampling variability):  0.41</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 1) = 0.0755, p-val = 0.7834</span></span>
+<span><span class="co">## Q(df = 1) = 0.4066, p-val = 0.5237</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## estimate      se    zval    pval    ci.lb   ci.ub    </span></span>
-<span><span class="co">##   0.2919  0.2982  0.9788  0.3277  -0.2926  0.8765    </span></span>
+<span><span class="co">##   0.2260  0.2498  0.9050  0.3655  -0.2635  0.7156    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
@@ -194,18 +194,18 @@ evaluted if correlation is diagonal</p>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## Random-Effects Model (k = 2; tau^2 estimator: REML)</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0 (SE = 0.3944)</span></span>
+<span><span class="co">## tau^2 (estimated amount of total heterogeneity): 0 (SE = 0.1776)</span></span>
 <span><span class="co">## tau (square root of estimated tau^2 value):      0</span></span>
 <span><span class="co">## I^2 (total heterogeneity / total variability):   0.00%</span></span>
 <span><span class="co">## H^2 (total variability / sampling variability):  1.00</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Test for Heterogeneity:</span></span>
-<span><span class="co">## Q(df = 1) = 0.0755, p-val = 0.7834</span></span>
+<span><span class="co">## Q(df = 1) = 0.4066, p-val = 0.5237</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Model Results:</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## estimate      se    zval    pval    ci.lb   ci.ub    </span></span>
-<span><span class="co">##   0.2919  0.2982  0.9788  0.3277  -0.2926  0.8765    </span></span>
+<span><span class="co">##   0.2260  0.2498  0.9050  0.3655  -0.2635  0.7156    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre>
@@ -214,34 +214,34 @@ evaluted if correlation is diagonal</p>
 <span><span class="co"># Use Lin-Sullivan method</span></span>
 <span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##        beta        se         p</span></span>
-<span><span class="co">## 1 0.2919297 0.2982412 0.3276603</span></span></code></pre>
+<span><span class="co">## 1 0.2260322 0.2497689 0.3654837</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, accounting for correlation  </span></span>
 <span><span class="co"># Use Lin-Sullivan method</span></span>
 <span><span class="fu"><a href="../reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##        beta       se         p</span></span>
-<span><span class="co">## 1 0.2749423 0.223448 0.2185274</span></span></code></pre>
+<pre><code><span><span class="co">##        beta        se         p</span></span>
+<span><span class="co">## 1 0.2231914 0.2109518 0.2900461</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, assume identity correlation  </span></span>
 <span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       stat1 stat2     RE2Cp RE2Cp.twoStep         QE       QEp Isq</span></span>
-<span><span class="co">## 1 0.9581227     0 0.3734579            NA 0.07554817 0.7834236   0</span></span></code></pre>
+<pre><code><span><span class="co">##       stat1 stat2     RE2Cp RE2Cp.twoStep        QE     QEp Isq</span></span>
+<span><span class="co">## 1 0.8189624     0 0.4123499            NA 0.4065614 0.52372   0</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run random effects meta-analysis, accounting for correlation </span></span>
 <span><span class="fu"><a href="../reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      stat1 stat2     RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 1.514016     0 0.2591319            NA NA  NA  NA</span></span></code></pre>
+<span><span class="co">## 1 1.119407     0 0.3349482            NA NA  NA  NA</span></span></code></pre>
 <pre><code><span><span class="co">##      stat1 stat2     RE2Cp RE2Cp.twoStep QE QEp Isq</span></span>
-<span><span class="co">## 1 1.514016     0 0.2591319            NA NA  NA  NA</span></span></code></pre>
+<span><span class="co">## 1 1.119407     0 0.3349482            NA NA  NA  NA</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
 <details><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.3.1 (2023-06-16)</span></span>
+<pre><code><span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.2 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -260,25 +260,25 @@ evaluted if correlation is diagonal</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] clusterGeneration_1.3.7 MASS_7.3-60             mvtnorm_1.2-2          </span></span>
-<span><span class="co">## [4] metafor_4.2-0           numDeriv_2016.8-1.1     metadat_1.2-0          </span></span>
-<span><span class="co">## [7] Matrix_1.5-4.1          remaCor_0.0.17          ggplot2_3.4.2          </span></span>
+<span><span class="co">## [1] clusterGeneration_1.3.8 MASS_7.3-60             mvtnorm_1.2-4          </span></span>
+<span><span class="co">## [4] metafor_4.4-0           numDeriv_2016.8-1.1     metadat_1.2-0          </span></span>
+<span><span class="co">## [7] Matrix_1.6-1.1          remaCor_0.0.17          ggplot2_3.4.4          </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] sass_0.4.6        utf8_1.2.3        EnvStats_2.7.0    stringi_1.7.12   </span></span>
-<span><span class="co">##  [5] lattice_0.21-8    digest_0.6.32     magrittr_2.0.3    evaluate_0.21    </span></span>
-<span><span class="co">##  [9] grid_4.3.1        fastmap_1.1.1     rprojroot_2.0.3   plyr_1.8.8       </span></span>
-<span><span class="co">## [13] jsonlite_1.8.5    purrr_1.0.1       fansi_1.0.4       scales_1.2.1     </span></span>
-<span><span class="co">## [17] codetools_0.2-19  textshaping_0.3.6 jquerylib_0.1.4   Rdpack_2.4       </span></span>
-<span><span class="co">## [21] cli_3.6.1         rlang_1.1.1       rbibutils_2.2.13  munsell_0.5.0    </span></span>
-<span><span class="co">## [25] withr_2.5.0       cachem_1.0.8      yaml_2.3.7        tools_4.3.1      </span></span>
-<span><span class="co">## [29] reshape2_1.4.4    memoise_2.0.1     colorspace_2.1-0  mathjaxr_1.6-0   </span></span>
-<span><span class="co">## [33] vctrs_0.6.3       R6_2.5.1          lifecycle_1.0.3   stringr_1.5.0    </span></span>
-<span><span class="co">## [37] fs_1.6.2          ragg_1.2.5        pkgconfig_2.0.3   desc_1.4.2       </span></span>
-<span><span class="co">## [41] pkgdown_2.0.7     pillar_1.9.0      bslib_0.5.0       gtable_0.3.3     </span></span>
-<span><span class="co">## [45] glue_1.6.2        Rcpp_1.0.10       systemfonts_1.0.4 xfun_0.39        </span></span>
-<span><span class="co">## [49] tibble_3.2.1      knitr_1.43        nlme_3.1-162      htmltools_0.5.5  </span></span>
-<span><span class="co">## [53] rmarkdown_2.22    compiler_4.3.1</span></span></code></pre>
+<span><span class="co">##  [1] sass_0.4.8        utf8_1.2.4        EnvStats_2.8.1    stringi_1.8.3    </span></span>
+<span><span class="co">##  [5] lattice_0.21-9    digest_0.6.34     magrittr_2.0.3    evaluate_0.23    </span></span>
+<span><span class="co">##  [9] grid_4.3.2        fastmap_1.1.1     plyr_1.8.9        jsonlite_1.8.8   </span></span>
+<span><span class="co">## [13] purrr_1.0.2       fansi_1.0.6       scales_1.3.0      codetools_0.2-19 </span></span>
+<span><span class="co">## [17] textshaping_0.3.7 jquerylib_0.1.4   Rdpack_2.6        cli_3.6.2        </span></span>
+<span><span class="co">## [21] rlang_1.1.3       rbibutils_2.2.16  munsell_0.5.0     withr_3.0.0      </span></span>
+<span><span class="co">## [25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       reshape2_1.4.4   </span></span>
+<span><span class="co">## [29] memoise_2.0.1     colorspace_2.1-0  mathjaxr_1.6-0    vctrs_0.6.5      </span></span>
+<span><span class="co">## [33] R6_2.5.1          lifecycle_1.0.4   stringr_1.5.1     fs_1.6.3         </span></span>
+<span><span class="co">## [37] ragg_1.2.7        pkgconfig_2.0.3   desc_1.4.3        pkgdown_2.0.7    </span></span>
+<span><span class="co">## [41] pillar_1.9.0      bslib_0.6.1       gtable_0.3.4      glue_1.7.0       </span></span>
+<span><span class="co">## [45] Rcpp_1.0.12       systemfonts_1.0.5 xfun_0.41         tibble_3.2.1     </span></span>
+<span><span class="co">## [49] knitr_1.45        nlme_3.1-163      htmltools_0.5.7   rmarkdown_2.25   </span></span>
+<span><span class="co">## [53] compiler_4.3.2</span></span></code></pre>
 </details><div class="section level3">
 <h3 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>
