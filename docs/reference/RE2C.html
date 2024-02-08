@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">remaCor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.18</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,14 +79,29 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Return values:</p><ul><li><p><code>stat1</code>: statistic testing effect mean</p></li>
-<li><p><code>stat2</code>: statistic testing effect heterogeneity</p></li>
-<li><p><code>RE2Cp</code>: RE2 p-value accounting for correlelation between tests</p></li>
-<li><p><code>RE2Cp.twoStep</code>: two step RE2C test after fixed effect test.  Only evaluated if twoStep==TRUE</p></li>
-<li><p><code>QE</code>: test statistic for the test of (residual) heterogeneity</p></li>
-<li><p><code>QEp</code>: p-value for the test of (residual) heterogeneity</p></li>
-<li><p><code>Isq</code>: I^2 statistic</p></li>
-</ul><p><code>QE</code>, <code>QEp</code> and <code>ISq</code> are only evaluted if correlation is diagonal</p>
+<dl><dt>stat1:</dt>
+<dd><p>statistic testing effect mean</p></dd>
+
+<dt>stat2:</dt>
+<dd><p>statistic testing effect heterogeneity</p></dd>
+
+<dt>RE2Cp:</dt>
+<dd><p>RE2 p-value accounting for correlelation between tests</p></dd>
+
+<dt>RE2Cp.twoStep:</dt>
+<dd><p>two step RE2C test after fixed effect test.  Only evaluated if <code>twoStep==TRUE</code></p></dd>
+
+<dt>QE:</dt>
+<dd><p>test statistic for the test of (residual) heterogeneity</p></dd>
+
+<dt>QEp:</dt>
+<dd><p>p-value for the test of (residual) heterogeneity</p></dd>
+
+<dt>Isq:</dt>
+<dd><p>I^2 statistic</p></dd>
+
+
+</dl><p><code>QE</code>, <code>QEp</code> and <code>ISq</code> are only evaluted if correlation is diagonal</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -145,26 +160,26 @@
 <span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
 <span class="r-in"><span><span class="co"># assume identity correlation  </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       beta        se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.640249 0.1199545 9.427215e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        beta        se           p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.3599795 0.1290264 0.005271316</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run random effects meta-analysis,</span></span></span>
 <span class="r-in"><span><span class="co"># assume identity correlation  </span></span></span>
 <span class="r-in"><span><span class="fu">RE2C</span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1 stat2        RE2Cp RE2Cp.twoStep       QE       QEp Isq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28.48818     0 2.645963e-07            NA 1.948993 0.8561569   0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1 stat2       RE2Cp RE2Cp.twoStep       QE       QEp Isq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 7.783925     0 0.009897764            NA 4.635272 0.4619909   0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
 <span class="r-in"><span><span class="co"># account for correlation </span></span></span>
 <span class="r-in"><span><span class="fu"><a href="LS.html">LS</a></span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       beta         se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.593186 0.09363983 2.377081e-10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        beta        se           p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.3378342 0.1140215 0.003047576</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run random effects meta-analysis,</span></span></span>
 <span class="r-in"><span><span class="co"># account for correlation </span></span></span>
 <span class="r-in"><span><span class="fu">RE2C</span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1 stat2       RE2Cp RE2Cp.twoStep QE QEp Isq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 40.12921     0 7.72383e-10            NA NA  NA  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      stat1     stat2       RE2Cp RE2Cp.twoStep QE QEp Isq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 8.778764 0.9359335 0.003853862            NA NA  NA  NA</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

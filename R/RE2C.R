@@ -33,16 +33,16 @@ pkg.env <- new.env()
 #' }
 #'
 #' @return
-#' Return values:
-#' \itemize{
-#' \item{\code{stat1}: }{statistic testing effect mean}
-#' \item{\code{stat2}: }{statistic testing effect heterogeneity}
-#' \item{\code{RE2Cp}: }{RE2 p-value accounting for correlelation between tests}
-#' \item{\code{RE2Cp.twoStep}: }{two step RE2C test after fixed effect test.  Only evaluated if twoStep==TRUE}
-#' \item{\code{QE}: }{test statistic for the test of (residual) heterogeneity}
-#' \item{\code{QEp}: }{p-value for the test of (residual) heterogeneity}
-#' \item{\code{Isq}: }I^2 statistic
+#' \describe{
+#' \item{stat1:}{statistic testing effect mean}
+#' \item{stat2:}{statistic testing effect heterogeneity}
+#' \item{RE2Cp:}{RE2 p-value accounting for correlelation between tests}
+#' \item{RE2Cp.twoStep:}{two step RE2C test after fixed effect test.  Only evaluated if \code{twoStep==TRUE}}
+#' \item{QE:}{test statistic for the test of (residual) heterogeneity}
+#' \item{QEp:}{p-value for the test of (residual) heterogeneity}
+#' \item{Isq:}{I^2 statistic}
 #' }
+#'
 #' \code{QE}, \code{QEp} and \code{ISq} are only evaluted if correlation is diagonal
 #'
 #' @examples

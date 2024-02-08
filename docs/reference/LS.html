@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">remaCor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.15</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.18</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,10 +75,17 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Return values:</p><ul><li><p><code>beta</code>: effect size</p></li>
-<li><p><code>se</code>: effect size standard error</p></li>
-<li><p><code>p</code>: p-value</p></li>
-</ul></div>
+<dl><dt>beta:</dt>
+<dd><p>effect size</p></dd>
+
+ <dt>se:</dt>
+<dd><p>effect size standard error</p></dd>
+
+ <dt>p:</dt>
+<dd><p>p-value</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Perform fixed effect meta-analysis for correlated test statistics using method of Lin and Sullivan (2009).  By default, correlation is set to identity matrix to for independent test statistics.</p>
@@ -131,14 +138,14 @@
 <span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
 <span class="r-in"><span><span class="co"># assume identity correlation  </span></span></span>
 <span class="r-in"><span><span class="fu">LS</span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        beta        se           p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.4802197 0.1493915 0.001306697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        beta        se            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.8158457 0.1879126 1.414346e-05</span>
 <span class="r-in"><span> </span></span>
 <span class="r-in"><span><span class="co"># Run fixed effects meta-analysis, </span></span></span>
 <span class="r-in"><span><span class="co"># account for correlation </span></span></span>
 <span class="r-in"><span><span class="fu">LS</span><span class="op">(</span> <span class="va">df</span><span class="op">$</span><span class="va">beta</span>, <span class="va">df</span><span class="op">$</span><span class="va">se</span>, <span class="va">C</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       beta         se            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.429647 0.07655066 1.993279e-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        beta        se            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.7488763 0.1975421 0.0001500601</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

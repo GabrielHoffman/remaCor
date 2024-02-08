@@ -21,13 +21,11 @@
 #' }
 #'
 #' @return
-#' Return values:
-#' \itemize{
-#' \item{\code{beta}: }{effect size}
-#' \item{\code{se}: }{effect size standard error}
-#' \item{\code{p}: }{p-value}
-#'}
-#'
+#' \describe{
+#'  \item{beta:}{effect size}
+#'  \item{se:}{effect size standard error}
+#'  \item{p:}{p-value}
+#' }
 #' @examples
 #' library(clusterGeneration)
 #' library(mvtnorm)

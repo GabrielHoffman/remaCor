@@ -14,11 +14,10 @@ LS(beta, stders, cor = diag(1, length(beta)))
 \item{cor}{correlation matrix between of test statistics.  Default considers uncorrelated test statistics}
 }
 \value{
-Return values:
-\itemize{
-\item{\code{beta}: }{effect size}
-\item{\code{se}: }{effect size standard error}
-\item{\code{p}: }{p-value}
+\describe{
+ \item{beta:}{effect size}
+ \item{se:}{effect size standard error}
+ \item{p:}{p-value}
 }
 }
 \description{
