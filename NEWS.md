@@ -1,3 +1,7 @@
+# remaCor 0.0.19
+ - Feb 27, 2024
+ - in `RE2C()` return QE, QEp, Isq, etc even when correlation is not diagonal
+
 # remaCor 0.0.18
  - Feb 8, 2024
  - fix compiler issue on Windows

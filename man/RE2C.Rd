@@ -25,18 +25,17 @@ RE2C(beta, stders, cor = diag(1, length(beta)), twoStep = FALSE)
 \item{QEp:}{p-value for the test of (residual) heterogeneity}
 \item{Isq:}{I^2 statistic}
 }
-
-\code{QE}, \code{QEp} and \code{ISq} are only evaluted if correlation is diagonal
 }
 \description{
 Random effect meta-analysis for correlated test statistics using RE2C
 }
 \details{
-Perform random effect meta-analysis for correlated test statistics using RE2 method of Han and Eskin (2011), or RE2 for correlated test statistics from Han, et al., (2016).  Also uses RE2C method of Lee, Eskin and Han (2017) to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.
+Perform random effect meta-analysis for correlated test statistics using RE2 method of \insertCite{han2011random;textual}{remaCor}, or RE2 for correlated test statistics from \insertCite{han2016general;textual}{remaCor}.  Also uses RE2C method of \insertCite{lee2017increasing;textual}{remaCor} to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.
 
 This method requires the correlation matrix to be symmatric positive definite (SPD).  If this condition is not satisfied, results will be NA.  If the matrix is not SPD, there is likely an issue with how it was generated. 
 
-However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running \code{Matrix::nearPD( x, corr=TRUE)} to produce the nearest SPD matrix to the input.
+
+For computing \code{Q}, \code{QEp}, and \code{Isq}, the effective number of independent studies is determined by \code{sum(solve(cor))} \insertCite{liu1997sample}{remaCor}.  When the correlation is diagonal, the studies are independent and this value is simply the number of studies.
 }
 \examples{
 library(clusterGeneration)
@@ -90,10 +89,6 @@ RE2C( df$beta, df$se, C)
 }
 \references{
 {
-  \insertRef{lee2017increasing}{remaCor}
-
-  \insertRef{han2016general}{remaCor}
-
-  \insertRef{han2011random}{remaCor}
+  \insertAllCited{}
 }
 }

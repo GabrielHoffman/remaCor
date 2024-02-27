@@ -18,18 +18,15 @@ pkg.env <- new.env()
 #' @param cor correlation matrix between of test statistics.  Default considers uncorrelated test statistics 
 #' @param twoStep Apply two step version of RE2C that is designed to be applied only after the fixed effect model.
 #'
-#' @details Perform random effect meta-analysis for correlated test statistics using RE2 method of Han and Eskin (2011), or RE2 for correlated test statistics from Han, et al., (2016).  Also uses RE2C method of Lee, Eskin and Han (2017) to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.
+#' @details Perform random effect meta-analysis for correlated test statistics using RE2 method of \insertCite{han2011random;textual}{remaCor}, or RE2 for correlated test statistics from \insertCite{han2016general;textual}{remaCor}.  Also uses RE2C method of \insertCite{lee2017increasing;textual}{remaCor} to further test for heterogenity in effect size. By default, correlation is set to identity matrix to for independent test statistics.
 #'
 #' This method requires the correlation matrix to be symmatric positive definite (SPD).  If this condition is not satisfied, results will be NA.  If the matrix is not SPD, there is likely an issue with how it was generated. 
 #'
-#' However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running \code{Matrix::nearPD( x, corr=TRUE)} to produce the nearest SPD matrix to the input. 
+# However, evaluating the correlation between observations that are not pairwise complete can give correlation matricies that are not SPD.  In this case, consider running \code{Matrix::nearPD( x, corr=TRUE)} to produce the nearest SPD matrix to the input. 
 #'
+#' For computing \code{Q}, \code{QEp}, and \code{Isq}, the effective number of independent studies is determined by \code{sum(solve(cor))} \insertCite{liu1997sample}{remaCor}.  When the correlation is diagonal, the studies are independent and this value is simply the number of studies.
 #' @references{
-#'   \insertRef{lee2017increasing}{remaCor}
-#' 
-#'   \insertRef{han2016general}{remaCor}
-#' 
-#'   \insertRef{han2011random}{remaCor}
+#'   \insertAllCited{}
 #' }
 #'
 #' @return
@@ -42,8 +39,6 @@ pkg.env <- new.env()
 #' \item{QEp:}{p-value for the test of (residual) heterogeneity}
 #' \item{Isq:}{I^2 statistic}
 #' }
-#'
-#' \code{QE}, \code{QEp} and \code{ISq} are only evaluted if correlation is diagonal
 #'
 #' @examples
 #' library(clusterGeneration)
@@ -171,6 +166,7 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
                         stat2         = NA,
                         RE2Cp         = NA,
                         RE2Cp.twoStep = NA,
+                        # tau2          = NA,
                         QE            = NA,
                         QEp           = NA,
                         Isq           = NA )
@@ -204,7 +200,7 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
 
   FEt.lows = as.numeric(pkg.env$FEtlow_table[min(nstudy-1,nmax),])
 
-  isdiag = all(cor[!diag(nrow(cor))] == FALSE)
+  # isdiag = all(cor[!diag(nrow(cor))] == FALSE)
 
   # End new
   #-----------------
@@ -281,9 +277,6 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
     p.RE2_cond <- 0.5*pchisq(lrt.mle,1,lower.tail=FALSE) + 0.5*pchisq(lrt.mle,2,lower.tail=FALSE)
   }
   
-  if( ! isdiag ){
-    Q = NA
-  }
 
   if( twoStep ){
     ##----------------------------------------------
@@ -314,13 +307,18 @@ RE2C <- function(beta, stders, cor=diag(1,length(beta)), twoStep = FALSE) {
     p.RE2C.twoStep = NA
   }
 
+  # compute effective number of independent studies
+  # based on correlation matrix
+  neff = sum(solve(cor))
+
   returnVal = c(  stat1         = stat1,
                   stat2         = stat2,
                   RE2Cp         = p.RE2_cond,
                   RE2Cp.twoStep = p.RE2C.twoStep,
+                  # tau2          = mle.tau2,
                   QE            = Q,
-                  QEp           = pchisq(q=Q,df=(nstudy-1),lower.tail=FALSE),
-                  Isq           = max(100*(Q-(nstudy-1))/Q,0) )
+                  QEp           = pchisq(q=Q,df=(neff-1),lower.tail=FALSE),
+                  Isq           = max(100*(Q-(neff-1))/Q,0) )
 
    data.frame( t(returnVal))
 }
