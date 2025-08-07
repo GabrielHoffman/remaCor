@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   remaCor: remaCor.html
-last_built: 2025-08-04T18:44Z
+last_built: 2025-08-07T18:35Z
 urls:
   reference: http://gabrielhoffman.github.io/remaCor/reference
   article: http://gabrielhoffman.github.io/remaCor/articles

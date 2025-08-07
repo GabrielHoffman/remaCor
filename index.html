@@ -55,16 +55,24 @@
 <p align="center">
 <img src="reference/figures/image.png" width="400"></p>
 <p align="justify">
-Meta-analysis is widely used to summarize estimated effects sizes across multiple statistical tests. Standard fixed and random effect meta-analysis methods assume that the estimated of the effect sizes are statistically independent. Here we relax this assumption and enable meta-analysis when the correlation matrix between effect size estimates is known. Fixed effect meta-analysis uses the method of <a href="https://doi.org/10.1016/j.ajhg.2009.11.001" class="external-link">Lin and Sullivan (2009)</a>, and random effects meta-analysis uses the method of <a href="https://doi.org/10.1093/hmg/ddw049" class="external-link">Han, et al. 2016</a>.
 </p>
+<p>Meta-analysis is widely used to summarize estimated effects sizes across multiple statistical tests. Standard fixed and random effect meta-analysis methods assume that the estimated of the effect sizes are statistically independent. Here we relax this assumption and enable meta-analysis when the correlation matrix between effect size estimates is known. Fixed effect meta-analysis uses the method of <a href="https://doi.org/10.1016/j.ajhg.2009.11.001" class="external-link">Lin and Sullivan (2009)</a>, and random effects meta-analysis uses the method of <a href="https://doi.org/10.1093/hmg/ddw049" class="external-link">Han, et al. 2016</a>. An exentsion of the Lin-Sullivan method for finite sample size is described in <a href="https://doi.org/10.1101/2025.01.29.635498" class="external-link">Hoffman and Roussos (2025)</a>.</p>
+
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, accounting for correlation </span></span>
+<code class="sourceCode R"><span><span class="co"># Run fixed effects meta-analysis, </span></span>
+<span><span class="co">#  accounting for correlation </span></span>
 <span><span class="fu"><a href="reference/LS.html">LS</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Run random effects meta-analysis, accounting for correlation </span></span>
+<span><span class="co"># Run fixed effects meta-analysis, </span></span>
+<span><span class="co">#  accounting for correlation,</span></span>
+<span><span class="co">#  and finite sample size using residual degrees of freedom</span></span>
+<span><span class="fu"><a href="reference/LS.empirical.html">LS.empirical</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span>, nu<span class="op">=</span><span class="va">rdf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Run random effects meta-analysis, </span></span>
+<span><span class="co">#  accounting for correlation </span></span>
 <span><span class="fu"><a href="reference/RE2C.html">RE2C</a></span><span class="op">(</span> <span class="va">beta</span>, <span class="va">stders</span>, <span class="va">Sigma</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
